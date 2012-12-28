@@ -1,14 +1,15 @@
-/*
- * USAGE
+/* Inspired by Tom Anthony http://www.seomoz.org/blog/visitor-social-network-login-status-google-analytics
+
+USAGE
 <script src="vj_ga_social.js"></script>
 <script>
     testSocial({
         facebook: 'facebook_app_id'
     });
 </script>
- *
- *
- *
+ 
+ 
+ 
  */
 (function (window, undefined) {
 	var beacon
@@ -30,13 +31,10 @@
 	    if(status){
 		//window._gaq.push(['_trackEvent', 'social', network, 'logged in',  undefined, 1]);
 	    }
-	    console.log(network +' '+ status);
+	    window.logData(network +' '+ status);
 	}
 	,beacons = {
-		twitter: {
-		    src: 'https://twitter.com/login?redirect_after_login=%2Fimages%2Fspinner.gif'
-		}
-		,facebook: {
+		facebook: {
 		    src: '//connect.facebook.net/en_US/all.js',
 		    init: function(name){
 			window.fbAsyncInit = function(){
@@ -46,6 +44,9 @@
 			    });
 			};
 		    }
+		}
+		,twitter: {
+		    src: 'https://twitter.com/login?redirect_after_login=%2Fimages%2Fspinner.gif'
 		}
 		,google: {
 		    src: 'https://accounts.google.com/CheckCookie?continue=https://www.google.com/intl/en/images/logos/accounts_logo.png'
