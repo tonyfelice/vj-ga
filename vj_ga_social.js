@@ -5,6 +5,7 @@ USAGE
 <script>
     testSocial({
         facebook: 'exampleAppId1234567890'
+        ,callback: optionalFn
     });
 </script>
  
@@ -13,7 +14,8 @@ USAGE
  */
 (function (window, undefined) {
 	var beacon
-	,loadScr = function(src){  //handler for loading scripts
+	//handler for loading scripts
+	,loadScr = function(src){  
 	    var doc = window.document
 	    ,tag = 'script'
 	    ,g=doc.createElement(tag)
@@ -21,18 +23,21 @@ USAGE
 	    g.src=src;
 	    s.parentNode.insertBefore(g,s);
 	}
-	,loadImg = function(src, name){ //handler for loading images
+	//handler for loading images
+	,loadImg = function(src, name){ 
 	    var i = new Image();
 	    i.onload=function(){logStatus(name, true); i = i.onload = i.onerror = undefined; };
 	    i.onerror=function(){logStatus(name, false); i = i.onload = i.onerror = undefined; };
 	    i.src=src;
 	}
-	,logStatus = function(network, status) { //handler for status
-	    if(status){  //only tracking positives
+	//handler for status - this can be overridden by defining callback in the caller object
+	,logStatus = function(network, status) { 
+	    if(status){  //here, only tracking positives
 		window._gaq.push(['_trackEvent', 'social login status', network, 'logged in',  undefined, 1]);
 	    }
 	}
-	,beacons = { //this is the json that controls which networks are supported.  beacon (object) whose only child is src trigger handiling via image. beacon with src and init children are handled as script
+	//define and configure which networks are supported.  beacon (object) whose only child is src trigger handiling via image. beacon with src and init children are handled as script
+	,beacons = { 
 		/*
 		 * facebook has a supported API method to check login status without interaction.
 		 * Pass the beaconName ("facebook") as an array key when calling the testSocial function.
@@ -66,18 +71,8 @@ USAGE
 		    src: 'https://pinterest.com/login/?next=https://s-passets-ec.pinimg.com/images/load2.gif'
 		}
 	}
-	,init = function () {  //loop the beacons json and handle accordingly.
-	    for (var name in beacons) {
-		beacon = beacons[name];
-		if (beacon.appId) {
-		    loadScr(beacon.src);
-		    beacon.init(name);
-		} else if (beacon.src && !beacon.init) {
-		    loadImg(beacon.src, name);
-		}
-	    }
-	}
-	,testSocial = function (opts) {  //init the function using the object passed to function, which comes through as opts
+	//define the main routine using any objects passed to function
+	,testSocial = function (opts) {  
 	    if (opts.facebook) {
 		beacons.facebook.appId = opts.facebook;
 	    }
@@ -85,6 +80,19 @@ USAGE
 		logStatus = opts.callback;
 	    }
 	    init();
+	}
+	//do the work
+	,init = function () {  
+	    //loop the beacons json and handle accordingly
+	    for (var name in beacons) {
+		beacon = beacons[name];
+		if (beacon.appId) {  //fb is defined, but will not fire unless appId is handed to the fn when called by window
+		    loadScr(beacon.src);
+		    beacon.init(name);
+		} else if (beacon.src && !beacon.init) { // !beacon.init is an important test to determine which handler we really need
+		    loadImg(beacon.src, name);
+		}
+	    }
 	};
-	window.testSocial = testSocial;
+	window.testSocial = testSocial;  //promote the fn to global
 }(window));
