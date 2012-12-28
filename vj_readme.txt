@@ -26,16 +26,22 @@ This tracking library solves for a couple of tricky issues in a robust analytics
 	* Logs pageviews to otherwise non-trackable resources such as PDF files, such as /downloads/report.pdf
 	* Tracks all form interactions, to perform robust abandonment analysis (can be disabled at a field or form level by applying a CSS class: .gae_noevent)
 	* Tracks all clicks, including the intended target of the click and the x,y position of the mouse (can be disabled at an element or parent level by applying a CSS class: .gae_noclick)
+	* Tracks viewport size change
+	* Tracks scroll position, seeing that it's particularly useful for content strategy/promotion to understand whether a single-page visitor came and read an entire article.
 
-GA can do all of these things, it just typically requires lots of inline code edits (outside of the typical GATC block)
+GA can record all of these things, it just typically requires lots of inline code edits (outside of the typical GATC block)
 
-In addition to streamlining the installation workflow, this code configures 4 of the 5 available Custom Variables.  Because GA is typically a last-touch attribution tool, the first two custom variables are used to store the referrer and landing  page associated with a user’s first visit.  The third custom variable stores historical conversion information, and the fourth variable stores a unique identifier for each visitor.  These custom variables will exist for the user until cookies are cleared.  Because the slots are limited, and the storage expectation is for the lifetime of the cookie, I’ve iterated them below, along with a mnemonic in parentheses. 
-1.	("From")   stores the first touch referrer (aka the referring site that first brought the visitor to the site)
+In addition to streamlining the installation workflow, this code configures 4 of the 5 available Custom Variables.
+Because GA is typically a last-touch attribution tool, the first two custom variables are used to store the referrer and landing  page associated with a user's first visit.
+The third custom variable stores historical conversion information, and the fourth variable stores a unique identifier for each visitor.
+These custom variables will exist for the user until cookies are cleared.  Because the slots are limited, and the storage expectation is for the lifetime of the cookie,
+I've iterated them below, along with a mnemonic in parentheses. 
+1.	("From")   stores the first touch referrer 
 2.	("To")   stores the first touch landing page
 3.	("Free" or "E" as in e-comm)   aggregates historical conversion information in 5 parts:
      a.	Total number of conversions for the visitor
      b.	Total aggregate value of all historical conversions
-     c.	Milliseconds elapsed between the current conversion event and the previous (just happened to be the easiest metric :)
+     c.	Milliseconds elapsed between the current conversion event and the previous 
      d.	Time of the current conversion event (posix format)
      e.	Time of the first conversion (posix format)
 4.	("For")   stores a unique identifier for each visitor. In no way personally identifiable, this is the user identifier assigned by Google in the __utmz cookie, but otherwise unavailable to GA reporting
