@@ -1,4 +1,15 @@
-
+/*
+ * USAGE
+<script src="vj_ga_social.js"></script>
+<script>
+    testSocial({
+        facebook: 'facebook_app_id'
+    });
+</script>
+ *
+ *
+ *
+ */
 (function (window, undefined) {
 	var beacon
 	,loadScr = function(src){
@@ -57,7 +68,7 @@
 		}
 	    }
 	}
-	,handshake = function (opts) {
+	,testSocial = function (opts) {
 	    window._gaq = window._gaq || [];
 	    if (opts.facebook) {
 		beacons.facebook.appId = opts.facebook;
@@ -67,5 +78,5 @@
 	    }
 	    init();
 	};
-	window.handshake = handshake;
+	window.testSocial = testSocial;
 }(window));
