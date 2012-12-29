@@ -2,6 +2,7 @@
 		var thishost = location.hostname;
 		var regex = /^http(s)?\:\/\//i;
 		var fileregex = /\.(xml|rss|json|gif|jpg|png|pdf|txt|doc|docx|dmg|xls|xlsx|ppt|pptx|swf|wav|wma|mp3|mp4|mpg|mov|msi|exe|ics|vcf|zip|sit|rar|gz)($|[#\?])/i;
+		_vj.frmOrder = 1;
 		jQuery('a').each(function(){
 			try{
 				//
@@ -132,11 +133,10 @@
 	function _evTrackProxy(cat, action, label, el){
 		var tmp = '';
 		var regex = '';
-		_vj.order = 1;
 		try{
 			if(typeof(el) !== 'undefined'){
-				label = _vj.order;
-				_vj.order++;
+				label = _vj.frmOrder;
+				_vj.frmOrder++;
 				/*
 				 * storing field data
 				 *
