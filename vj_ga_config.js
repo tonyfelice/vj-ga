@@ -13,7 +13,6 @@
 				,['b._setDomainName', _vj.utmhost]
 				,['b._setAllowLinker', ((_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 1)]
 				,['b._setAllowHash', !((_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 1)]
-				,['b.trackPageview']
 			);
 			_gaq.push(['b.trackPageview']);
 		}
