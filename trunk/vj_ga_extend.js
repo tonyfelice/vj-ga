@@ -132,11 +132,11 @@
 	function _evTrackProxy(cat, action, label, el){
 		var tmp = '';
 		var regex = '';
-		var window.order = 1;
+		_vj.order = 1;
 		try{
 			if(typeof(el) !== 'undefined'){
-				label = window.order;
-				window.order++;
+				label = _vj.order;
+				_vj.order++;
 				/*
 				 * storing field data
 				 *
