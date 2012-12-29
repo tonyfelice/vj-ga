@@ -7,13 +7,13 @@
 			,['_setAllowLinker', ((_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 1)]
 			,['_setAllowHash', !((_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 1)]
 		);
-		if(typeof(_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 0){
+		if(typeof(_vj.secondary) !== 'undefined' && _vj.secondary.length > 0){
 			_gaq.push(
 				['b._setAccount', _vj.secondary]
 				,['b._setDomainName', _vj.utmhost]
 				,['b._setAllowLinker', ((_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 1)]
 				,['b._setAllowHash', !((_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 1)]
 			);
-			_gaq.push(['b.trackPageview']);
+			//_gaq.push(['b.trackPageview']);
 		}
 	} catch(err) {}
