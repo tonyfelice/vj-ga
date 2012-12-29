@@ -39,13 +39,23 @@ function _getCV(i){
 		return tmp;		
 	}
 }
+function _getId(){
+	var cky = '__utma';
+	var ret = _test(cky,1);
+	if (_test(cky) === 0){
+		return false;
+	}else{
+		ret = ret.split('.');
+		return ret[1];		
+	}
+}
 function _setCV(o){
 	try {
-		var dt = new Date().getTime();
+		var id = _getId();
 		if (_test('__utma') === 0){				 		
 			o.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
-			o.push(['_setCustomVar', 4, 'v', dt, 1]);
+			o.push(['_setCustomVar', 4, 'v', id, 1]);
 		}
 	} catch (err) {}
 }
