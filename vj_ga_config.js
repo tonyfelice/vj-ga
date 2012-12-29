@@ -15,5 +15,6 @@
 				,['b._setAllowHash', !((_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 1)]
 				,['b.trackPageview']
 			);
+			_gaq.push(['b.trackPageview']);
 		}
 	} catch(err) {}
