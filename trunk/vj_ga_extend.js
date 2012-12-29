@@ -10,7 +10,7 @@
 				//
 				// need iframe support
 				// linkbyPost get support
-				//
+				//see workplan.txt
 				//			
 			
 				var tracker = false; 		
@@ -135,7 +135,7 @@
 		var regex = '';
 		try{
 			if(typeof(el) !== 'undefined'){
-				label = _vj.frmOrder;
+				label = ''+_vj.frmOrder+'';
 				_vj.frmOrder++;
 				/*
 				 * storing field data
