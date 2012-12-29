@@ -1,7 +1,7 @@
 	jQuery(document).ready(function(){
 		var thishost = location.hostname;
 		var regex = /^http(s)?\:\/\//i;
-		var fileregex = /\.(xml|rss|gif|jpg|png|pdf|txt|doc|docx|xls|xlsx|ppt|pptx|swf|wav|wma|mp3|mp4|mpg|mov|msi|exe|ics|vcf|zip|sit|rar|gz)($|[#\?])/i;
+		var fileregex = /\.(xml|rss|json|gif|jpg|png|pdf|txt|doc|docx|dmg|xls|xlsx|ppt|pptx|swf|wav|wma|mp3|mp4|mpg|mov|msi|exe|ics|vcf|zip|sit|rar|gz)($|[#\?])/i;
 		jQuery('a').each(function(){
 			try{
 				//
@@ -132,16 +132,26 @@
 	function _evTrackProxy(cat, action, label, el){
 		var tmp = '';
 		var regex = '';
+		var order = 1;
 		try{
-			if(typeof(el) !== 'undefined'){	
-				if(typeof(el.selectedIndex) !== 'undefined'){
+			if(typeof(el) !== 'undefined'){
+				label = order;
+				order++;
+				/*
+				 * storing field data
+				 *
+				//handle sel pos
+				if(typeof(el.selectedIndex) !== 'undefined'){ 
 					label = el.options[el.selectedIndex].text;
-				}else if( jQuery(el).attr('type') == 'checkbox' ||  jQuery(el).attr('type') == 'radio' ){
+				//handle cbo state
+				}else if( jQuery(el).attr('type') == 'checkbox' ||  jQuery(el).attr('type') == 'radio' ){ 
 					tmp = el.value.replace(/[\W\s]+/g,'_');
 					label = (el.checked) ? tmp + ':checked' : tmp + ':unchecked';
+				//obfuscate pwd
 				}else if( jQuery(el).attr('type') == 'password' ){  
 					label = el.value.replace(/[a-z]/g,'x').replace(/[A-Z]/g,'X').replace(/[0-9]/g,'9').replace(/[^xX9]/g,'$');
-				}else{
+				//obfuscate email
+				}else{ 
 					regex = /^([a-zA-Z0-9._%+-]+)(@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})$/;
 					if(regex.test(el.value)){
 						tmp = regex.exec(el.value);
@@ -149,7 +159,7 @@
 					}else{
 						label = el.value;
 					}
-				}
+				}*/
 			}
 			_gaq.push(['_trackEvent', cat, action, label]);
 		} catch(err) {
