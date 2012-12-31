@@ -12,7 +12,7 @@ http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analyti
 */
 jQuery.noConflict();
 
-jQuery(function(jQuery) {
+jQuery(function() {
     // Debug flag
     var debugMode = true;
 
