@@ -44,16 +44,14 @@ jQuery(function($) {
     function trackLocation() {
         bottom = $(window).height() + $(window).scrollTop();
         height = $(document).height();
-	console.log($(window).scrollTop());
 
         // If user starts to scroll send an event
         if (bottom > readerLocation && !scroller) {
             currentTime = new Date();
             scrollStart = currentTime.getTime();
-            //timeToScroll = Math.round((scrollStart - beginning) / 1000).toString() + ' sec';
-	    timeToScroll = doTime(scrollStart, beginning);
+            timeToScroll = doTime(scrollStart, beginning);
             if (!debugMode) {
-                _gaq.push(['_trackEvent', 'scrolling', 'startScroll', timeToScroll ]);
+                _gaq.push(['_trackEvent', 'scrolling', 'scroll started', timeToScroll ]);
             } else {
                 console.log('started reading ' + timeToScroll);
             }
@@ -86,7 +84,7 @@ jQuery(function($) {
                     //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Reader', 2]);
 		    _gaq.push(['_trackEvent', 'engagement', location.pathname+' : reader', totalTime ]);
                 }
-                _gaq.push(['_trackEvent', 'scrolling', 'pageBottom', totalTime ]);
+                _gaq.push(['_trackEvent', 'scrolling', 'page bottom', totalTime ]);
             } else {
                 console.log('bottom of page '+totalTime);
             }
@@ -94,18 +92,17 @@ jQuery(function($) {
         }
 	
 	// If user returns to top send an event
-        /*if (bottom > readerLocation && !scroller) {
+        if ($(window).scrollTop() == 0 && scroller) {
             currentTime = new Date();
-            scrollStart = currentTime.getTime();
-            //timeToScroll = Math.round((scrollStart - beginning) / 1000).toString() + ' sec';
-	    timeToScroll = doTime(scrollStart, beginning);
+            end = currentTime.getTime();
+            timeToScroll = doTime(end, scrollStart);
             if (!debugMode) {
-                _gaq.push(['_trackEvent', 'scrolling', 'startScroll', timeToScroll ]);
+                _gaq.push(['_trackEvent', 'scrolling', 'back to top', timeToScroll ]);
             } else {
-                console.log('started reading ' + timeToScroll);
+                console.log('back to top ' + timeToScroll);
             }
             scroller = true;
-        }*/
+        }
 
         
     }
