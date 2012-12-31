@@ -32,7 +32,7 @@
 										}										
 									});									
 								}catch(err){
-									//console.debug('link:' + err + '; ' + this.href + ' getLinkerURL fail');
+									console.log('link:' + err + '; ' + this.href + ' getLinkerURL fail');
 								}								
 								linkflag = true;
 							}
@@ -49,7 +49,7 @@
 					});
 				}
 			} catch(err) {
-				//console.debug('link:' + err + '; ' + this.href + ' not handled');
+				console.log('link:' + err + '; ' + this.href + ' not handled');
 			}
 		});			
 		if(typeof(_vj._allowDomain) !== 'undefined' && _vj._allowDomain.length > 0){
@@ -66,7 +66,7 @@
 						}							
 					}
 				} catch(err) {
-					//console.debug('form:' + err + '; ' + this + ' linkByPost fail');
+					console.log('form:' + err + '; ' + this + ' linkByPost fail');
 				}
 			});
 		}
@@ -85,7 +85,7 @@
 					});						
 				}
 			} catch(err) {
-				//console.debug('flds:' + err + '; ' + this + ' inspection fail');
+				console.log('flds:' + err + '; ' + this + ' inspection fail');
 			}						
 		});		
 		jQuery("*").click(function(e){
@@ -114,10 +114,10 @@
 						_vj._thisClickVirtual = target;
 					}
 				} catch(err) {
-					//console.debug('click:' + err + '; ' + this + ' virtual pv fail');
+					console.log('click:' + err + '; ' + this + ' virtual pv fail');
 				}	
 			} catch(err) {
-				//console.debug('click:' + err);
+				console.log('click:' + err);
 			}	
 		});
 		try{
@@ -131,7 +131,7 @@
 				}
 			}
 		}catch(err){
-			//console.debug('param:' + err);
+			console.log('param:' + err);
 		}
 	});
 	function _evTrackProxy(cat, action, label, el){
@@ -167,7 +167,7 @@
 			}
 			_gaq.push(['_trackEvent', cat, action, label]);
 		} catch(err) {
-			//console.debug('eventProxy:' + err);
+			console.log('eventProxy:' + err);
 		}
 	}
 	(function($) {
