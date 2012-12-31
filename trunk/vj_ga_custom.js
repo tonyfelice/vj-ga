@@ -49,13 +49,20 @@ function _getId(){
 		return ret[1];		
 	}
 }
+/*
+_gaq.push(['_setCustomVar',
+      1,                   // This custom var is set to slot #1.  Required parameter.
+      'Items Removed',     // The name acts as a kind of category for the user activity.  Required parameter.
+      'Yes',               // This value of the custom variable.  Required parameter.
+      2                    // Sets the scope to session-level.  Optional parameter.
+   ]);
+*/
 function _setCV(o){
 	try {
-		var id = _getId();
 		if (_test('__utma') === 0){				 		
 			o.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
-			o.push(['_setCustomVar', 4, 'v', id, 1]);
+			o.push(['_setCustomVar', 4, 'v', _getId(), 1]);
 		}
 		
 	} catch (err) {
