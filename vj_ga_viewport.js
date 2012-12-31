@@ -14,30 +14,37 @@ jQuery(function() {
 	,layout:0
     };
     
-    win.width = jQuery(window).width();
-    win.height = jQuery(window).height();
-    win.preW = win.width;
-    win.preH = win.height;
-    win.layout = (win.width > win.height) ? 'landscape' : 'portrait';
-    
     //track viewport dimensions
-    /*
-    _gaq.push(['_trackEvent', 'viewport', 'initial dims', win.width+'x'+win.height, 0, true]);
-    _gaq.push(['_trackEvent', 'viewport', 'initial layout', win.layout, 0, true]);
-    _gaq.push(['_trackEvent', 'viewport', 'initial width', win.width, 0, true]);
-    */
-    
-    console.log(win.width);
-    console.log(win.height);
-    console.log(win.layout);
-    
+    function logViewport(state){
+	win.width = jQuery(window).width();
+	win.height = jQuery(window).height();
+	win.layout = (win.width > win.height) ? 'landscape' : 'portrait';
+	if(state != 'initial' && (win.height == win.preW && win.width == win.preH)){
+	    state = 'flip';
+	}
+	
+	/*
+	_gaq.push(['_trackEvent', 'viewport', state +' dims', win.width+'x'+win.height, 0, true]);
+	_gaq.push(['_trackEvent', 'viewport', state +' layout', win.layout, 0, true]);
+	_gaq.push(['_trackEvent', 'viewport', state +' width', win.width, 0, true]);
+	*/
+	
+	console.log(state);
+	console.log(win.width);
+	console.log(win.height);
+	console.log(win.layout);
+	
+	win.preW = win.width;
+	win.preH = win.height;
+    }
+    logViewport('initial');
     
     //track viewport dimensions being changed by resize (throttled)
     var tmpTimer;
     jQuery(window).resize(function(){
 	clearTimeout(tmpTimer);
 	tmpTimer = setTimeout(function(){
-	    
+	    logViewport('resize');
 	}, 500);
     });
 });
