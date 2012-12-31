@@ -30,7 +30,7 @@ function _getCV(i){
 	var tmp = false;
 	if (_test(cky) === 0){return tmp;}else{
 		ret = ret.split('|');
-		ret = ret[1].split(',');
+		ret = ret[1].split('^');
 		for(j=0; j<ret.length; j++){
 			console.log(ret[j]);
 			if(ret[j].charAt(0) == i){
