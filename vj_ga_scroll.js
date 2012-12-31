@@ -44,6 +44,7 @@ jQuery(function($) {
     function trackLocation() {
         bottom = $(window).height() + $(window).scrollTop();
         height = $(document).height();
+	console.log($(window).scrollTop());
 
         // If user starts to scroll send an event
         if (bottom > readerLocation && !scroller) {
@@ -63,7 +64,6 @@ jQuery(function($) {
         /*if (bottom >= $('.entry-content').scrollTop() + $('.entry-content').innerHeight() && !endContent) {
             currentTime = new Date();
             contentScrollEnd = currentTime.getTime();
-            //timeToContentEnd = Math.round((contentScrollEnd - scrollStart) / 1000).toString() + ' sec';
             timeToContentEnd = doTime(contentScrollEnd, scrollStart);
             if (!debugMode) {
                 _gaq.push(['_trackEvent', 'scrolling', 'ContentBottom', '', timeToContentEnd]);
@@ -77,8 +77,7 @@ jQuery(function($) {
         if (bottom >= height && !didComplete) {
             currentTime = new Date();
             end = currentTime.getTime();
-            //totalTime = Math.round((end - scrollStart) / 1000).toString() + ' sec';
-	    totalTime = doTime(end, scrollStart);
+            totalTime = doTime(end, scrollStart);
             if (!debugMode) {
                 if (totalTime < 60) {
                     //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Scanner', 2]);
@@ -93,6 +92,22 @@ jQuery(function($) {
             }
             didComplete = true;
         }
+	
+	// If user returns to top send an event
+        /*if (bottom > readerLocation && !scroller) {
+            currentTime = new Date();
+            scrollStart = currentTime.getTime();
+            //timeToScroll = Math.round((scrollStart - beginning) / 1000).toString() + ' sec';
+	    timeToScroll = doTime(scrollStart, beginning);
+            if (!debugMode) {
+                _gaq.push(['_trackEvent', 'scrolling', 'startScroll', timeToScroll ]);
+            } else {
+                console.log('started reading ' + timeToScroll);
+            }
+            scroller = true;
+        }*/
+
+        
     }
 
     // Track the scrolling and track location
