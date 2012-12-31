@@ -44,11 +44,12 @@ jQuery(function($) {
         if (bottom > readerLocation && !scroller) {
             currentTime = new Date();
             scrollStart = currentTime.getTime();
-            timeToScroll = Math.round((scrollStart - beginning) / 1000);
+            timeToScroll = Math.round((scrollStart - beginning) / 1000).toString();
+	    
             if (!debugMode) {
-                _gaq.push(['_trackEvent', 'scrolling', 'startScroll', timeToScroll.toString ]);
+                _gaq.push(['_trackEvent', 'scrolling', 'startScroll', timeToScroll ]);
             } else {
-                console.log('started reading ' + timeToScroll.toString);
+                console.log('started reading ' + timeToScroll);
             }
             scroller = true;
         }
@@ -57,7 +58,7 @@ jQuery(function($) {
         /*if (bottom >= $('.entry-content').scrollTop() + $('.entry-content').innerHeight() && !endContent) {
             currentTime = new Date();
             contentScrollEnd = currentTime.getTime();
-            timeToContentEnd = Math.round((contentScrollEnd - scrollStart) / 1000);
+            timeToContentEnd = Math.round((contentScrollEnd - scrollStart) / 1000).toString();
             if (!debugMode) {
                 _gaq.push(['_trackEvent', 'scrolling', 'ContentBottom', '', timeToContentEnd]);
             } else {
@@ -70,18 +71,18 @@ jQuery(function($) {
         if (bottom >= height && !didComplete) {
             currentTime = new Date();
             end = currentTime.getTime();
-            totalTime = Math.round((end - scrollStart) / 1000);
+            totalTime = Math.round((end - scrollStart) / 1000).toString();
             if (!debugMode) {
                 if (totalTime < 60) {
                     //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Scanner', 2]);
-		    _gaq.push(['_trackEvent', 'engagement', location.pathname+' : scanner', totalTime.toString ]);
+		    _gaq.push(['_trackEvent', 'engagement', location.pathname+' : scanner', totalTime ]);
                 } else {
                     //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Reader', 2]);
-		    _gaq.push(['_trackEvent', 'engagement', location.pathname+' : reader', totalTime.toString ]);
+		    _gaq.push(['_trackEvent', 'engagement', location.pathname+' : reader', totalTime ]);
                 }
-                _gaq.push(['_trackEvent', 'scrolling', 'pageBottom', totalTime.toString ]);
+                _gaq.push(['_trackEvent', 'scrolling', 'pageBottom', totalTime ]);
             } else {
-                console.log('bottom of page '+totalTime.toString);
+                console.log('bottom of page '+totalTime);
             }
             didComplete = true;
         }
