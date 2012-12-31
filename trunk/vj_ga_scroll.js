@@ -10,8 +10,9 @@ Eivind Savio
 http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analytics-part-1/
 
 */
+jQuery.noConflict();
 
-jQuery(function($) {
+jQuery(function(jQuery) {
     // Debug flag
     var debugMode = true;
 
@@ -42,8 +43,8 @@ jQuery(function($) {
 
     // Check the location and track user
     function trackLocation() {
-        bottom = $(window).height() + $(window).scrollTop();
-        height = $(document).height();
+        bottom = jQuery(window).height() + jQuery(window).scrollTop();
+        height = jQuery(document).height();
 
         // If user starts to scroll send an event
         if (bottom > readerLocation && !scroller) {
@@ -59,7 +60,7 @@ jQuery(function($) {
         }
 
         // If user has hit the bottom of the content send an event
-        /*if (bottom >= $('.entry-content').scrollTop() + $('.entry-content').innerHeight() && !endContent) {
+        /*if (bottom >= jQuery('.entry-content').scrollTop() + jQuery('.entry-content').innerHeight() && !endContent) {
             currentTime = new Date();
             contentScrollEnd = currentTime.getTime();
             timeToContentEnd = doTime(contentScrollEnd, scrollStart);
@@ -92,7 +93,7 @@ jQuery(function($) {
         }
 	
 	// If user returns to top send an event
-        if ($(window).scrollTop() == 0 && scroller) {
+        if (jQuery(window).scrollTop() == 0 && scroller) {
             currentTime = new Date();
             end = currentTime.getTime();
             timeToScroll = doTime(end, scrollStart);
@@ -108,7 +109,7 @@ jQuery(function($) {
     }
 
     // Track the scrolling and track location
-    $(window).scroll(function() {
+    jQuery(window).scroll(function() {
         if (timer) {
             clearTimeout(timer);
         }
