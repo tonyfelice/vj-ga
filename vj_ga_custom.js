@@ -68,9 +68,9 @@ function _testCV(id){
 }
 function _setCV(o){
 	try {
-		var id = _getID();
+		var id = _getId();
 		//var isSet = _testCV(id);
-		if (false == false){				 		
+		if (_getCV(4) == false){				 		
 			o.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
 			o.push(['_setCustomVar', 4, 'v', id, 1]);
