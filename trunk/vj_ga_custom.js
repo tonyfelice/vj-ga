@@ -50,23 +50,6 @@ function _getId(){
 		return ret[1];		
 	}
 }
-/*
-var id = _getID();
-		if (_test('_utmv') == false )//(id != _getCV(4)){				 		
-			o.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
-			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
-			o.push(['_setCustomVar', 4, 'v', id, 1]);
-		}
-
-function _testCV(id){
-	//utmv exists - no, then need to set!
-	if(_test('__utmv') === 0){return false;}
-	if(typeof(_getCV(4)) !== 'undefined'){
-		return (_getCV(4) == id);//cv4 neq id - no, then need to set!
-	}else{
-		return false; //cv4 exists - no, then need to set!
-	}
-}*/
 function _setCV(o){
 	try {
 		var id = _getId();
@@ -76,11 +59,7 @@ function _setCV(o){
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
 			o.push(['_setCustomVar', 4, 'v', id, 1]);
 		}
-		console.log('setCV fired');
-		console.log('true?'+ cv[2] +'!='+ id);
-	} catch (err) {
-		console.log('error here'+err);
-	}
+	} catch (err) {console.log(err);}
 }
 function _goal(gaq,nom,val){//count.total.sincelast.timenow.timefirst
 	try {
@@ -99,14 +78,10 @@ function _goal(gaq,nom,val){//count.total.sincelast.timenow.timefirst
 		}
 		cv = _getCV(4);
 		gaq.push(['_trackEvent', 'auto-goal', nom, cv, val]);
-	} catch (err) {}
+	} catch (err) {console.log(err);}
 }
-//_setCV(_gaq);
 jQuery(document).ready(function(){
-	console.log(typeof(_gaq));
 	_setCV(_gaq);
-	console.log('cv4=' + _getCV(4));
-	
 });
 
 
