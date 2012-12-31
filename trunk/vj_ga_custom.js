@@ -81,7 +81,7 @@ function _goal(gaq,nom,val){//count.total.sincelast.timenow.timefirst
 		gaq.push(['_trackEvent', 'auto-goal', nom, cv, val]);
 	} catch (err) {}
 }
-_setCV(_gaq);
+//_setCV(_gaq);
 jQuery(document).ready(function(){
 	_setCV(_gaq);
 });
