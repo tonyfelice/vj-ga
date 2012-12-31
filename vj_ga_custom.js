@@ -50,17 +50,18 @@ function _getId(){
 	}
 }
 /*
-_gaq.push(['_setCustomVar',
-      1,                   // This custom var is set to slot #1.  Required parameter.
-      'Items Removed',     // The name acts as a kind of category for the user activity.  Required parameter.
-      'Yes',               // This value of the custom variable.  Required parameter.
-      2                    // Sets the scope to session-level.  Optional parameter.
-   ]);
+var id = _getID();
+		if (_test('_utmv') == false )//(id != _getCV(4)){				 		
+			o.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
+			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
+			o.push(['_setCustomVar', 4, 'v', id, 1]);
+		}
 */
 function _setCV(o){
 	try {
 		var id = _getID();
-		if (id != _getCV(4)){				 		
+		var cv = _test('__utmv');
+		if (cv === 0 || _getCV(4) != id){				 		
 			o.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
 			o.push(['_setCustomVar', 4, 'v', id, 1]);
