@@ -74,11 +74,14 @@
 	jQuery(document).ready(function(){
 		jQuery('input,select,textarea,button').each(function(){
 			try{
-				var __frm = jQuery(this).parent('form');
+				var __fld
+				,__frm = jQuery(this).parent('form');
 				if(!jQuery(this).hasClass('gae_noevent')  && !__frm.hasClass('gae_noevent')){ //'gae_noevent' class can be set at the form or element levels, and will disable tracking
 					__frm = (__frm.attr('id').length > 0) ? __frm.attr('id')+':' : __frm.attr('name')+':';
+					__fld = (this.id.length > 0) ? __frm + this.id : __frm + this.name;
+					__fld = location.pathname +':'+ __fld;
 					jQuery(this).blur(function(){
-						_evTrackProxy('forms', (this.id.length > 0) ? __frm + this.id : __frm + this.name, '', this);
+						_evTrackProxy('forms', __fld.toString(), '', this);
 					});						
 				}
 			} catch(err) {
@@ -98,7 +101,8 @@
 				if(typeof(jQuery(e.target).attr('href')) != 'undefined' && jQuery(e.target).attr('href').length > 0){
 					target[2] = ' (href=' + jQuery(e.target).attr('href') + ')';
 				}
-				target = target.toString().replace(/,/g,'');					
+				target = target.toString().replace(/,/g,'');
+				target = location.pathname +':'+ target;
 				if(!jQuery(e.target).parents().andSelf().hasClass('gae_noclick') && _vj._thisClickEvent != ePos && (typeof(_vj._logClickEvent) === 'undefined' || _vj._logClickEvent == true)){/* look up the chain for .gae_noclick, and only track if false*/
 					_evTrackProxy('clicks', target, e.pageX+','+e.pageY);
 					_vj._thisClickEvent = ePos;
