@@ -5,14 +5,22 @@ inspired by Pete Miller http://wishfulcode.com/2011/11/02/measuring-viewport-siz
 
 //send to GA window viewport size on inital load and when resized as non-interactive events
 jQuery(function() {
-    //track viewport dimensions
+    //init
     var win = {
-	width: jQuery(window).width()
-	,height: jQuery(window).height()
-	,preW: win.width
-	,preH: win.height
-	,layout: (win.width > win.height) ? 'landscape' : 'portrait'
+	width:0
+	,height:0
+	,preW:0
+	,preH:0
+	,layout:0
     };
+    
+    win.width = jQuery(window).width();
+    win.height = jQuery(window).height();
+    win.preW = win.width;
+    win.preH = win.height;
+    win.layout = (win.width > win.height) ? 'landscape' : 'portrait';
+    
+    //track viewport dimensions
     /*
     _gaq.push(['_trackEvent', 'viewport', 'initial dims', win.width+'x'+win.height, 0, true]);
     _gaq.push(['_trackEvent', 'viewport', 'initial layout', win.layout, 0, true]);
