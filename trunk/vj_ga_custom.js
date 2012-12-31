@@ -57,7 +57,7 @@ function _setCV(o){
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
 			o.push(['_setCustomVar', 4, 'v', id, 1]);
 		}
-		console.log('cv4=' + _getCV(4));
+		
 	} catch (err) {
 		console.log(err);
 	}
@@ -84,6 +84,7 @@ function _goal(gaq,nom,val){//count.total.sincelast.timenow.timefirst
 //_setCV(_gaq);
 jQuery(document).ready(function(){
 	_setCV(_gaq);
+	console.log('cv4=' + _getCV(4));
 });
 
 
