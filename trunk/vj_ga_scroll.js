@@ -34,6 +34,11 @@ jQuery(function($) {
 
     // Track the aticle load?
     //_gaq.push(['_trackEvent', 'scrolling', 'loaded', '', 0, true]);
+    
+    //process the timer
+    function doTime(a, b){
+	return (Math.round((a - b) / 100)/10).toString() + ' sec';
+    }
 
     // Check the location and track user
     function trackLocation() {
@@ -44,8 +49,8 @@ jQuery(function($) {
         if (bottom > readerLocation && !scroller) {
             currentTime = new Date();
             scrollStart = currentTime.getTime();
-            timeToScroll = Math.round((scrollStart - beginning) / 1000).toString();
-	    
+            //timeToScroll = Math.round((scrollStart - beginning) / 1000).toString() + ' sec';
+	    timeToScroll = doTime(scrollStart, beginning);
             if (!debugMode) {
                 _gaq.push(['_trackEvent', 'scrolling', 'startScroll', timeToScroll ]);
             } else {
@@ -58,7 +63,8 @@ jQuery(function($) {
         /*if (bottom >= $('.entry-content').scrollTop() + $('.entry-content').innerHeight() && !endContent) {
             currentTime = new Date();
             contentScrollEnd = currentTime.getTime();
-            timeToContentEnd = Math.round((contentScrollEnd - scrollStart) / 1000).toString();
+            //timeToContentEnd = Math.round((contentScrollEnd - scrollStart) / 1000).toString() + ' sec';
+            timeToContentEnd = doTime(contentScrollEnd, scrollStart);
             if (!debugMode) {
                 _gaq.push(['_trackEvent', 'scrolling', 'ContentBottom', '', timeToContentEnd]);
             } else {
@@ -71,7 +77,8 @@ jQuery(function($) {
         if (bottom >= height && !didComplete) {
             currentTime = new Date();
             end = currentTime.getTime();
-            totalTime = Math.round((end - scrollStart) / 1000).toString();
+            //totalTime = Math.round((end - scrollStart) / 1000).toString() + ' sec';
+	    totalTime = doTime(end, scrollStart);
             if (!debugMode) {
                 if (totalTime < 60) {
                     //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Scanner', 2]);
