@@ -56,7 +56,7 @@ var id = _getID();
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
 			o.push(['_setCustomVar', 4, 'v', id, 1]);
 		}
-*/
+
 function _testCV(id){
 	//utmv exists - no, then need to set!
 	if(_test('__utmv') === 0){return false;}
@@ -65,19 +65,19 @@ function _testCV(id){
 	}else{
 		return false; //cv4 exists - no, then need to set!
 	}
-}
+}*/
 function _setCV(o){
 	try {
 		var id = _getId();
 		//var isSet = _testCV(id);
-		if (_getCV(4) == false){				 		
+		if (_getCV(4) == false){ // ||cv4 neq id				 		
 			o.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
 			o.push(['_setCustomVar', 4, 'v', id, 1]);
 		}
 		console.log('setCV fired');
 	} catch (err) {
-		console.log(err);
+		console.log('error here'+err);
 	}
 }
 function _goal(gaq,nom,val){//count.total.sincelast.timenow.timefirst
