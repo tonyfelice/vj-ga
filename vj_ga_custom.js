@@ -57,7 +57,7 @@ function _setCV(o){
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
 			o.push(['_setCustomVar', 4, 'v', id, 1]);
 		}
-		console.log(id);
+		console.log('cv4=' + _getCV(4));
 	} catch (err) {
 		console.log(err);
 	}
