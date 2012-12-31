@@ -33,6 +33,7 @@ function _getCV(i){
 		ret = ret[1].split(',');
 		for(j=0; j<ret.length; j++){
 			if(ret[j].charAt(0) == i){
+				console.log(ret[j]);
 				tmp = ret[j].split('=');
 			}
 		}
