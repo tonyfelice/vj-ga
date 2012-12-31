@@ -10,7 +10,7 @@ Eivind Savio
 http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analytics-part-1/
 
 */
-jQuery.noConflict();
+
 
 jQuery(function() {
     // Debug flag
@@ -21,7 +21,7 @@ jQuery(function() {
 
     // # px before tracking a reader
     var readerLocation = 150;
-
+    
     // Set some flags for tracking & execution
     var timer = 0;
     var scroller = false;
@@ -103,6 +103,7 @@ jQuery(function() {
                 console.log('back to top ' + timeToScroll);
             }
             scroller = true;
+	    didComplete = false;
         }
 
         
