@@ -85,6 +85,7 @@ function _goal(gaq,nom,val){//count.total.sincelast.timenow.timefirst
 jQuery(document).ready(function(){
 	_setCV(_gaq);
 	console.log('cv4=' + _getCV(4));
+	console.log(typeof(_gaq));
 });
 
 
