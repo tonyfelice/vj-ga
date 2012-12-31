@@ -69,7 +69,7 @@ function _testCV(id){
 function _setCV(o){
 	try {
 		var id = _getId();
-		var cv = _getCV(4)
+		var cv = _getCV(4);
 		if (cv == false || cv != id){ // ||cv4 neq id				 		
 			o.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
 			o.push(['_setCustomVar', 2, 'l', _crop(window.location.pathname), 1]);
