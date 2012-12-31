@@ -82,6 +82,9 @@ function _goal(gaq,nom,val){//count.total.sincelast.timenow.timefirst
 	} catch (err) {}
 }
 _setCV(_gaq);
+jQuery(document).ready(function(){
+	_setCV(_gaq);
+});
 
 
 
