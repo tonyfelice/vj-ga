@@ -76,6 +76,7 @@ function _setCV(o){
 			o.push(['_setCustomVar', 4, 'v', id, 1]);
 		}
 		console.log('setCV fired');
+		console.log('true?'+ cv +'!='+ id);
 	} catch (err) {
 		console.log('error here'+err);
 	}
