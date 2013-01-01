@@ -12,13 +12,15 @@ jQuery(function() {
 	,preW:0
 	,preH:0
 	,layout:0
+	,maxW:0
     };
     
     //track viewport dimensions
     function logViewport(state){
-	win.width = document.documentElement.clientWidth;
-	win.height = document.documentElement.clientHeight;
+	win.width = jQuery(window).width();
+	win.height = jQuery(window).height();
 	win.layout = (win.width > win.height) ? 'landscape' : 'portrait';
+	win.maxW = window.screen.availWidth;
 	if(state != 'initial' && (win.height == win.preW && win.width == win.preH)){
 	    state = 'flip';
 	}
@@ -28,10 +30,12 @@ jQuery(function() {
 	    console.log(win.width);
 	    console.log(win.height);
 	    console.log(win.layout);
+	    console.log(win.maxW);
 	}else{
-	    _gaq.push(['_trackEvent', 'viewport', state +' dims', win.width+'x'+win.height, 0, true]);
 	    _gaq.push(['_trackEvent', 'viewport', state +' layout', win.layout, 0, true]);
 	    _gaq.push(['_trackEvent', 'viewport', state +' width', win.width, 0, true]);
+	    _gaq.push(['_trackEvent', 'viewport', state +' height', win.height, 0, true]);
+	    _gaq.push(['_trackEvent', 'viewport', state +' avail width', win.maxW, 0, true]);
 	}
 	
 	//reset the placeholder vars
