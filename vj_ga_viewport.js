@@ -16,24 +16,25 @@ jQuery(function() {
     
     //track viewport dimensions
     function logViewport(state){
-	win.width = jQuery(window).width();
-	win.height = jQuery(window).height();
+	win.width = document.documentElement.clientWidth;
+	win.height = document.documentElement.clientHeight;
 	win.layout = (win.width > win.height) ? 'landscape' : 'portrait';
 	if(state != 'initial' && (win.height == win.preW && win.width == win.preH)){
 	    state = 'flip';
 	}
 	
-	/*
-	_gaq.push(['_trackEvent', 'viewport', state +' dims', win.width+'x'+win.height, 0, true]);
-	_gaq.push(['_trackEvent', 'viewport', state +' layout', win.layout, 0, true]);
-	_gaq.push(['_trackEvent', 'viewport', state +' width', win.width, 0, true]);
-	*/
+	if(typeof(_vj.debug) !== 'undefined' && _vj.debug == true){
+	    console.log(state);
+	    console.log(win.width);
+	    console.log(win.height);
+	    console.log(win.layout);
+	}else{
+	    _gaq.push(['_trackEvent', 'viewport', state +' dims', win.width+'x'+win.height, 0, true]);
+	    _gaq.push(['_trackEvent', 'viewport', state +' layout', win.layout, 0, true]);
+	    _gaq.push(['_trackEvent', 'viewport', state +' width', win.width, 0, true]);
+	}
 	
-	console.log(state);
-	console.log(win.width);
-	console.log(win.height);
-	console.log(win.layout);
-	
+	//reset the placeholder vars
 	win.preW = win.width;
 	win.preH = win.height;
     }
