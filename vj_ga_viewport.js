@@ -1,5 +1,6 @@
-/*
-inspired by Pete Miller http://wishfulcode.com/2011/11/02/measuring-viewport-size-with-google-analytics/
+/* Viewport detection
+
+fires event on initial load and resize events, as well as height/width flipflop indicating device reorientation
 
 */
 
@@ -33,9 +34,9 @@ jQuery(function() {
 	    console.log(win.maxW);
 	}else{
 	    _gaq.push(['_trackEvent', 'viewport', state +' layout', win.layout, 0, true]);
-	    _gaq.push(['_trackEvent', 'viewport', state +' width', win.width, 0, true]);
-	    _gaq.push(['_trackEvent', 'viewport', state +' height', win.height, 0, true]);
-	    _gaq.push(['_trackEvent', 'viewport', state +' avail width', win.maxW, 0, true]);
+	    _gaq.push(['_trackEvent', 'viewport', state +' width', win.width.toString(), 0, true]);
+	    _gaq.push(['_trackEvent', 'viewport', state +' height', win.height.toString(), 0, true]);
+	    _gaq.push(['_trackEvent', 'viewport', state +' avail width', win.maxW.toString(), 0, true]);
 	}
 	
 	//reset the placeholder vars
@@ -44,12 +45,12 @@ jQuery(function() {
     }
     logViewport('initial');
     
-    //track viewport dimensions being changed by resize (throttled)
+    //resize listener
     var tmpTimer;
     jQuery(window).resize(function(){
 	clearTimeout(tmpTimer);
 	tmpTimer = setTimeout(function(){
 	    logViewport('resize');
-	}, 500);
+	}, 500);  //note: this timer is dormant UNLESS there's a resize event in play
     });
 });
