@@ -1,4 +1,7 @@
 /*
+
+scroll detection
+
 based on work by
 Justin Cutroni
 Nick Mihailovski
@@ -14,7 +17,7 @@ http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analyti
 
 jQuery(function() {
     // Debug flag
-    var debugMode = true;
+    var debugMode = false;
 
     // Default time delay before checking location
     var callBackTime = 100;
@@ -114,7 +117,6 @@ jQuery(function() {
         if (timer) {
             clearTimeout(timer);
         }
-
         // Use a buffer so we don't call trackLocation too often.
         timer = setTimeout(trackLocation, callBackTime);
     });

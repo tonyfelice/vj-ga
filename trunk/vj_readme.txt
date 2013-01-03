@@ -50,17 +50,18 @@ I've iterated them below, along with a mnemonic in parentheses.
 ////////////////////////////////////////////////////////////////
 ////	FILE STRUCTURE
 ////////////////////////////////////////////////////////////////
-vj_ga_config.js
+vj_ga_config.js - deprecated
 configures GATC: setDomainName, setAllowLinker, setAllowHash
 
-vj_ga_custom.js
+vj_ga_custom.js - deprecated
 configures custom variables, contains a custom function for tracking eComm: _goal()
 
-vj_ga_extend.js
+vj_ga_extend.js - deprecated
 handles cross-domain tracking, form events, and click positions
 
-vj_ga_min.js
-contains the previous 3 files, packaged in that order (config,custom,extend), using the YUI compressor 2.4.4
+vj_ga.min.js
+contains the previous 3 files, packaged in that order (config,custom,extend)
+minified using the YUI compressor 2.4.4
 
 vj_ga_social.js
 OPTIONAL - detects whether or not visitors are logged into certain social networks (currently google,googleplus,twitter,facebook,pinterest), and logs such status as an analytics event, under the category 'social'
