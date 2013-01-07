@@ -654,9 +654,9 @@ USAGE
     //define the main routine using any objects passed to function
     ,checkSocial = function (opts) {
 	dataHandler = (_vj.debug) ? logStatusDebug : logStatus;
+	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+opts);
 	if(opts.facebook) {
 	    beacons.facebook.appId = opts.facebook;
-	    console.log(opts.facebook);
 	}
 	if(opts.callback) {  //override native logStatus handler with custom callback
 	    dataHandler = opts.callback;
@@ -688,7 +688,6 @@ if(_vj.trackSocial){
     setTimeout(
 	function(){_vj.checkSocial(
 	    _vj.configSocial
-	    //{beaconName: 'app id from service'//example// ,facebook: '1234567890'}
 	);}
     , 3000); // add slight delay to avoid overflowing the event buffer (10 events onload, replenish at 1 per sec https://developers.google.com/analytics/devguides/collection/other/limits-quotas)
 }
