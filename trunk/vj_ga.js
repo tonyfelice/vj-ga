@@ -627,7 +627,9 @@ USAGE
 		src: '//connect.facebook.net/en_US/all.js',
 		init: function(name){
 		    window.fbAsyncInit = function(){
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+this.appId);
+			console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'+this.facebook.appId);
+			console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'+this.appId);
+			console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'+beacons.facebook.appId);
 			FB.init({ appId:this.appId, status:true, cookie:true, xfbml:true});
 			FB.getLoginStatus(function(response){
 			    dataHandler(name, response.status!=='unknown');
