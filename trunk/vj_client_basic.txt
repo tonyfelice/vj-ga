@@ -4,15 +4,16 @@
 		autometrics: {
 			allowDomain:	[	//required
 				'vladimirjones.com'
-				,'autometrics.tumblr.com'
-			]
+				,'autometrics.tumblr.com']
 			,primary:	'UA-36024936-5'	//required
-			,secondary:	false  
+			,secondary:	false  // just like primary, 'UA-12345678-x'
 			,trackClicks:	true
 			,trackForms:	true
 			,trackViewport:	true
 			,trackScroll:	true
 			,trackSocial:	true
+			,configSocial:	{
+				facebook:'1234567890'}
 			,userDefined:	document.referrer
 			,customVars:	true
 			,debug:		false
@@ -20,23 +21,21 @@
 			,useShareThis:	false
 			,useDoubleclick:true
 			,trackParams:	[ 
-				'distance[postal_code]'
-				,'distance%5Bpostal_code%5D'
-			]
+				'querystringKey'
+				,'anotherKey']
 		}
 	};
 	var _gaq = _gaq || [];
 </script>
-
 <!-- do not modify below -->
 <script type="text/javascript">
-	(function(){if(typeof(jQuery)=="undefined"){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src=("https:"==document.location.protocol?"https://":"http://")+"ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);}})();
+	(function(){if(typeof(jQuery)=="undefined"){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);}})();
 </script>
 <script type="text/javascript">
-	(function(){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src=("https:"==document.location.protocol?"https://":"http://")+"vj-ga.googlecode.com/svn/trunk/vj_ga.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);})();
+	(function(){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src="//vj-ga.googlecode.com/svn/trunk/vj_ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);})();
 </script>
 <script type="text/javascript">
-	_vj.useSrc = (defined && _vj.autometrics.useDoubleclick) ? (('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js') : (('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/u/ga_debug.js');
+	_vj.useSrc = (typeof(_vj.autometrics.useDoubleclick) !== 'undefined' && _vj.autometrics.useDoubleclick) ? '//stats.g.doubleclick.net/dc.js' : (('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js');
 	(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=_vj.useSrc;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
 </script>
 <!-- *~*~*~*~*~*~* end google analytics tracking code *~*~*~*~*~*~* -->
