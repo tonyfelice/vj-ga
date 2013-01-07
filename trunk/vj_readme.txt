@@ -32,7 +32,7 @@ This tracking library solves for a couple of tricky issues in a robust analytics
 	* Tracks all clicks, including the intended target of the click and the x,y position of the mouse (can be disabled at an element or parent level by applying a CSS class: .vj_noclick)
 	* Tracks robust viewport information, including the initial actual size of the window, any resize events, the orientation (portrait / landscape), and the available width as an individual value (much more valuable than the full dimensions as a singel string)
 	* Tracks scroll position, seeing that it's particularly useful for content strategy/promotion to understand whether a single-page visitor came and read an entire article
-	* Has the ability to detect a small set of social networks that the visitor is currently logged into
+	* Optionally detects whether or not visitors are logged into certain social networks (currently google,googleplus,twitter,facebook,pinterest), and logs such status as an analytics event, under the category 'social'
 	* Provides an easy method to configure social action tracking through ShareThis/AddThis (plugins must be installed as they normally would)
 
 GA can record all of these things, but it would normall require lots of inline code edits (outside of the typical GATC block)
@@ -56,21 +56,12 @@ I've iterated them below, along with a mnemonic in parentheses.
 ////////////////////////////////////////////////////////////////
 ////	FILE STRUCTURE
 ////////////////////////////////////////////////////////////////
-vj_ga_config.js - deprecated
-configures GATC: setDomainName, setAllowLinker, setAllowHash
+vj_ga.js
 
-vj_ga_custom.js - deprecated
-configures custom variables, contains a custom function for tracking eComm: _goal()
-
-vj_ga_extend.js - deprecated
-handles cross-domain tracking, form events, and click positions
 
 vj_ga.min.js
-contains the previous 3 files, packaged in that order (config,custom,extend)
-minified using the YUI compressor 2.4.4
+vj_ga.js minified using the YUI compressor 2.4.4
 
-vj_ga_social.js
-OPTIONAL - detects whether or not visitors are logged into certain social networks (currently google,googleplus,twitter,facebook,pinterest), and logs such status as an analytics event, under the category 'social'
 
 
 
@@ -89,7 +80,7 @@ vj_doScroll	potentially fires an event when visitor scrolls to the bottom of the
 ////////////////////////////////////////////////////////////////
 ////	TRACKING CONFIGURATION - GATC
 ////////////////////////////////////////////////////////////////
-variable			enforcement	type		usage					notes
+variable			enforcement	type		purpose					notes
 _vj.autometrics.allowDomain	required	scalar (arr)	defines domains that will be tracked	comma-delim array of domains, as strings
 _vj.autometrics.primary		required	string		defines primary UA account id		example: 'UA-36024936-5'
 _vj.autometrics.secondary	optional	string		defines secondary UA account id		(example: 'UA-36024936-6') secondary account DOES NOT get events - used for roll-up or migration
@@ -99,6 +90,7 @@ _vj.autometrics.trackForms	optional	boolean		global form event toggle		can be us
 _vj.autometrics.trackViewport	optional	boolean		global viewport event toggle		can be used to globally disable viewport tracking
 _vj.autometrics.trackScroll	optional	boolean		global scroll event toggle		can be used to globally disable scroll tracking
 _vj.autometrics.trackSocial	optional	boolean		global social login detection		can be used to globally disable social login detection
+_vj.autometrics.configSocial	optional	scalar (obj)	config obj for social detection		(example: {facebook: '1234567890'}) primary use as a method to pass appId (as str) to the social detector; reserved child 'callback' used to override the processing fn
 _vj.autometrics.useShareThis	optional	boolean		set ShareThis social action hooks	does not install the plugin, simply configures
 _vj.autometrics.useAddThis	optional	boolean		set AddThis social action hooks		does not install the plugin, simply configures
 _vj.autometrics.useDoubleclick	optional	boolean		loads dc.js instead of ga.js		does not install the plugin, simply configures
