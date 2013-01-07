@@ -654,7 +654,7 @@ USAGE
     //define the main routine using any objects passed to function
     ,checkSocial = function (opts) {
 	dataHandler = (_vj.debug) ? logStatusDebug : logStatus;
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+opts);
+	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+opts.facebook);
 	if(opts.facebook) {
 	    beacons.facebook.appId = opts.facebook;
 	}
