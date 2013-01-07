@@ -1,26 +1,44 @@
 <!-- *~*~*~*~*~*~* begin google analytics tracking code *~*~*~*~*~*~* -->
 <script type="text/javascript"> 
-	try{
-		var _gaq = _gaq || [];
-		var _vj = _vj || {};
-		//------------------- ensure a comma-delimited list of valid domains, as strings
-		_vj._allowDomain = [
-			'www.domain.com'
-			,'blog.domain.com'
-			,'www.partner.com'
-		];
-		//------------------- ensure proper account number		 
-		_gaq.push(['_setAccount', 'UA-XXXXX-X']);	
-	
-	} catch(err) {}
-</script><!-- do not modify below -->
+	var _vj = {
+		autometrics: {
+			allowDomain:	[	//required
+				'vladimirjones.com'
+				,'autometrics.tumblr.com'
+			]
+			,primary:	'UA-36024936-5'	//required
+			,secondary:	false  
+			,trackClicks:	true
+			,trackForms:	true
+			,trackViewport:	true
+			,trackScroll:	true
+			,trackSocial:	true
+			,userDefined:	document.referrer
+			,customVars:	true
+			,debug:		false
+			,useAddThis:	false
+			,useShareThis:	false
+			,useDoubleclick:true
+			,trackParams:	[ 
+				'distance[postal_code]'
+				,'distance%5Bpostal_code%5D'
+			]
+		}
+	};
+	var _gaq = _gaq || [];
+</script>
+
+<!-- do not modify below -->
 <script type="text/javascript">
-	var gaHost=(("https:"==document.location.protocol)?"https://":"http://");if(typeof(jQuery)=="undefined"){document.write(unescape("%3Cscript src='"+gaHost+"ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' type='text/javascript'%3E%3C/script%3E"))}if(typeof(Prototype)!=="undefined"){jQuery.noConflict()}document.write(unescape("%3Cscript src='"+gaHost+"vj-ga.googlecode.com/svn/trunk/vj_ga.min.js' type='text/javascript'%3E%3C/script%3E"));
+	(function(){if(typeof(jQuery)=="undefined"){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src=("https:"==document.location.protocol?"https://":"http://")+"ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);}})();
 </script>
 <script type="text/javascript">
-	try{_gaq.push(['_trackPageview']);}catch(err){}
+	(function(){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src=("https:"==document.location.protocol?"https://":"http://")+"vj-ga.googlecode.com/svn/trunk/vj_ga.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);})();
 </script>
 <script type="text/javascript">
-	(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
+	_vj.useSrc = (defined && _vj.autometrics.useDoubleclick) ? (('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js') : (('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/u/ga_debug.js');
+	(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=_vj.useSrc;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
 </script>
 <!-- *~*~*~*~*~*~* end google analytics tracking code *~*~*~*~*~*~* -->
+
+
