@@ -626,8 +626,7 @@ USAGE
 	    facebook: { 
 		src: '//connect.facebook.net/en_US/all.js',
 		init: function(name){
-		    thisAppId = this.appId;
-		    window.fbAsyncInit = function(thisAppId){
+		    window.fbAsyncInit = function(){
 			/*FB.Event.subscribe('auth.statusChange', function(response) {
 			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
 			    if(response.status == 'connected') {
@@ -636,7 +635,7 @@ USAGE
 			});*/
 			console.log(beacons.facebook.appId);
 			console.log('breathe');
-			FB.init({ appId:String(thisAppId), status:true, cookie:true, xfbml:true});
+			FB.init({ appId:String(beacons.facebook.appId), status:true, cookie:true, xfbml:true});
 			FB.getLoginStatus(function(response){
 			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
 			    dataHandler(name, response.status!=='unknown');
