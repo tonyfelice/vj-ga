@@ -628,16 +628,17 @@ USAGE
 		init: function(name){
 		    window.fbAsyncInit = function(){
 			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+this.appId);
-			FB.Event.subscribe('auth.statusChange', function(response) {
+			/*FB.Event.subscribe('auth.statusChange', function(response) {
 			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
 			    if(response.status == 'connected') {
 				dataHandler(name, response.status);
 			    }
-			});
-			FB.init({ appId:this.appId.toString(), status:true, cookie:true, xfbml:true});
-			/*FB.getLoginStatus(function(response){
-			    dataHandler(name, response.status!=='unknown');
 			});*/
+			FB.init({ appId:this.appId.toString(), status:true, cookie:true, xfbml:true});
+			FB.getLoginStatus(function(response){
+			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
+			    dataHandler(name, response.status!=='unknown');
+			});
 		    };
 		}
 	    }
