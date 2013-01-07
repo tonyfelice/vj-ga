@@ -627,16 +627,8 @@ USAGE
 		src: '//connect.facebook.net/en_US/all.js',
 		init: function(name){
 		    window.fbAsyncInit = function(){
-			FB.Event.subscribe('auth.statusChange', function(response) {
-			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
-			    if(response.status == 'connected') {
-				dataHandler(name, response.status);
-			    }
-			});
 			FB.init({ appId:this.appId, status:true, cookie:true, xfbml:true});
-			/*FB.getLoginStatus(function(response){
-			    dataHandler(name, response.status!=='unknown');
-			});*/
+			
 		    };
 		}
 	    }
