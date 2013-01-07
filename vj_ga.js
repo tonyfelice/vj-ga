@@ -198,9 +198,9 @@ set the user defined var
 try{
     if(_vj.userDefined !== false && _vj.userDefined.length > 0 && (_vj.cookeez.eat('_vj-utm-ud') === false)){
 	_gaq.push(['_setVar', _vj.userDefined]);
-	//bake a cookie so we know we logged
-	_vj.cookeez.bake('_vj-utm-ud','init',false);
     }
+    //bake a cookie so we know we've been through
+    _vj.cookeez.bake('_vj-utm-ud','init',false);
 } catch(err) { console.log(err); }
 
 
