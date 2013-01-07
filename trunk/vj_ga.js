@@ -627,7 +627,6 @@ USAGE
 		src: '//connect.facebook.net/en_US/all.js',
 		init: function(name){
 		    thisAppId = this.appId;
-		    console.log(Closure.beacons.facebook.appId);
 		    window.fbAsyncInit = function(thisAppId){
 			/*FB.Event.subscribe('auth.statusChange', function(response) {
 			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
@@ -635,6 +634,7 @@ USAGE
 				dataHandler(name, response.status);
 			    }
 			});*/
+			console.log(beacons.facebook.appId);
 			console.log('breathe');
 			FB.init({ appId:String(thisAppId), status:true, cookie:true, xfbml:true});
 			FB.getLoginStatus(function(response){
