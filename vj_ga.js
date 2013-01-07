@@ -628,12 +628,12 @@ USAGE
 		init: function(name){
 		    window.fbAsyncInit = function(){
 			/*FB.Event.subscribe('auth.statusChange', function(response) {
-			    dataHandler(name, response.status==='connected'); //The status of the User. One of: connected, not_authorized or unknown.
+			    dataHandler(name, response.status!=='unknown'); //The status of the User. One of: connected, not_authorized or unknown.
 			});*/
 			FB.init({ appId:String(beacons.facebook.appId), status:true, cookie:true, xfbml:true});
 			FB.getLoginStatus(function(response){
 			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
-			    dataHandler(name, response.status==='connected'); //The status of the User. One of: connected, not_authorized or unknown.
+			    dataHandler(name, response.status!=='unknown'); //The status of the User. One of: connected, not_authorized or unknown.
 			}, true);
 		    };
 		}
