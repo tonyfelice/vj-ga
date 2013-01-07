@@ -628,7 +628,7 @@ USAGE
 		init: function(name){
 		    window.fbAsyncInit = function(){
 			FB.Event.subscribe('auth.statusChange', function(response) {
-			    console.log(response.status);
+			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
 			    if(response.status == 'connected') {
 				dataHandler(name, response.status);
 			    }
