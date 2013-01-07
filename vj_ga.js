@@ -627,6 +627,7 @@ USAGE
 		src: '//connect.facebook.net/en_US/all.js',
 		init: function(name){
 		    window.fbAsyncInit = function(){
+			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+this.appId);
 			FB.init({ appId:this.appId, status:true, cookie:true, xfbml:true});
 			FB.getLoginStatus(function(response){
 			    dataHandler(name, response.status!=='unknown');
@@ -655,6 +656,7 @@ USAGE
 	dataHandler = (_vj.debug) ? logStatusDebug : logStatus;
 	if(opts.facebook) {
 	    beacons.facebook.appId = opts.facebook;
+	    console.log(opts.facebook);
 	}
 	if(opts.callback) {  //override native logStatus handler with custom callback
 	    dataHandler = opts.callback;
