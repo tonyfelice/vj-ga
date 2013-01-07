@@ -655,7 +655,7 @@ USAGE
     ,checkSocial = function (opts) {
 	dataHandler = (_vj.debug) ? logStatusDebug : logStatus;
 	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+opts.facebook);
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+(opts.facebook)?'true':'false');
+	console.log((opts.facebook)?'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!true':'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!false');
 	if(opts.facebook) {
 	    beacons.facebook.appId = opts.facebook;
 	}
