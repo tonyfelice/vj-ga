@@ -764,7 +764,7 @@ I've iterated them below, along with a mnemonic in parentheses.
 			console.log("'_setCustomVar', 2, 'l', "+this.crop(window.location.pathname)+", 1");
 			console.log("'_setCustomVar', 4, 'v', "+id+", 1");
 		    }else{
-			gaScope.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?_crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
+			gaScope.push(['_setCustomVar', 1, 'r', (document.referrer.length > 0)?this.crop(document.referrer.substr(7,document.referrer.length)):'(direct)', 1]);
 			gaScope.push(['_setCustomVar', 2, 'l', this.crop(window.location.pathname), 1]);
 			gaScope.push(['_setCustomVar', 4, 'v', id, 1]);
 		    }
