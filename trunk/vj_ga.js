@@ -634,6 +634,7 @@ USAGE
 				dataHandler(name, response.status);
 			    }
 			});*/
+			console.log('breathe');
 			FB.init({ appId:String(thisAppId), status:true, cookie:true, xfbml:true});
 			FB.getLoginStatus(function(response){
 			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
