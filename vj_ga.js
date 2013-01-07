@@ -1,46 +1,53 @@
 /*
+                                                                          .-==-,                            
+                                                                       =#########;                          
+                                                                     -############                          
+                                                                    ;############                           
+                                                                    .#########X;         .,,,,.             
+                               .;=xX##X+.                             -+xx+-      ,=x#############=         
+                           -x#############                                    =######################.      
+                       ;x##################      vj.autometrics         .=############################=     
+                    -#######################                       ,+##########+-,          ,+#########-    
+                 ,X#########################,                  ;x#######X=,                    -########    
+               =#############################              -X######x-                           ,#######    
+             x###############################          -x######=.                                X######    
+          .X####+.       ;###################-     ,x#####X-      .#################-            ;######    
+         X###x             ##################x .+#####X;         .################               ;#####x    
+       x####               ,######################X;             ################+               +#####     
+     .#####.                ##################x;                #################+               #####-     
+     ######                 ##################                 #### #############=              x####x      
+    +#######                ,#################+               x###, #############-             ;####x       
+    ,########-              -##################              =####  #############;            .####x        
+     -##########x=;;;--+#######################.            ,####   #############.           ,####+         
+       =##################X; +#################+            ####x   #############           -####-          
+          ,=xX######x=;      ,##################           #####   .#############          +####.           
+                              ##################          #####=   .#############         ####x             
+                              ##################=        x#####    .#############       -####;              
+                              x##################       =#####;    ,#############      X###x                
+                              ;##################      ;######     ;#############    -####.                 
+                               ##################-    .######      -#############  .####=                   
+                               ###################    ######x      -############+ x###x                     
+                               -##################   #######       -################X                       
+                                ##################, x######-       -###############                         
+                                x#################+;######X        =############X                           
+                                .#########################         =############                            
+                                 x#######################,         =############                            
+                                  ######################=         .X###########+                            
+                                  -####################+        +##############                             
+                                   =##################=      ;####+x##########x                             
+                                    ,################,     +####;  +##########                              
+                                      -x###########=    -####+     ##########.                              
+                                         ,-+x##x=.    +####;       #########;                               
+                                                   .####x         x########,                                
+                                                 ,####-           ########                                  
+                                                X###;            #######+                                   
+                                               ####.            X######.                                    
+                                              x####            ######,                                      
+                                              #####          =####x.                                        
+                                              X#####,     ;X####-                                           
+                                               +#############-                                              
+                                                 ;+X####+;       
 
-
-
-                                                         :oyhhs:
-                                                       omMMMMMMM/
-                                                      yMMMMMMMMm.
-                                                      sMMMMMMd+    .:/+ooo+:
-                      .:oydNMMMNy.                     ./+/:../oydNMMMMMMMMMMdo
-                   /smMMMMMMMMMMMN:                     ./shNMMMMMMMMMMMMMMMMMMN/
-                /hNMMMMMMMMMMMMMMMm.                :ohmMMMMmhyo+/:----:+yNMMMMMM:
-             :yNMMMMMMMMMMMMMMMMMMMo           .:ohNMMNhs+-               .yMMMMMh
-           +dMMMMMMMMMMMMMMMMMMMMMMm        :odNMNhs/.                      mMMMMd
-         +mMNho/---:omMMMMMMMMMMMMMM-   :ohNMmy+-   /ddhhhhhhddmdy:         oMMMMy
-       +mMNo.        .NMMMMMMMMMMMMMs+yNNmy+-      :NMMMMMMMMMMMo           oMMMM/
-     :dMMN-           sMMMMMMMMMMMMMMdy+-         -NMMMMMMMMMMMM/           dMMMh
-    -NMMMd            :MMMMMMMMMMMMMN.           .mMMhMMMMMMMMMM:          /MMMm.
-    sMMMMM+            NMMMMMMMMMMMMM:           hMMsoMMMMMMMMMM-         .mMMN-
-    :NMMMMMd+:.. ..-/oyMMMMMMMMMMMMMMs          yMMm.sMMMMMMMMMM.        .dMMm:
-     :hNMMMMMNNmmmNNNdyyMMMMMMMMMMMMMm         oMMM/ sMMMMMMMMMN.       -dMMd-
-       -/syhdddhys+:.  -MMMMMMMMMMMMMM-       /MMMh  yMMMMMMMMMN       /mMMy.
-                        NMMMMMMMMMMMMMo      :NMMN-  yMMMMMMMMMm      sNMm+
-                        hMMMMMMMMMMMMMd     -mMMMs   yMMMMMMMMMd    :dMMy-
-                        +MMMMMMMMMMMMMM.   .dMMMN.   yMMMMMMMMMh  .sNMm/
-                        .MMMMMMMMMMMMMM+   hMMMMo    hMMMMMMMMMy /mMNo.
-                         dMMMMMMMMMMMMMh  sMMMMd     hMMMMMMMMMhhMNy-
-                         oMMMMMMMMMMMMMN.+MMMMM:     hMMMMMMMMMMNy:
-                         .NMMMMMMMMMMMMMsNMMMMs      dMMMMMMMMMh:
-                          yMMMMMMMMMMMMMMMMMMd       dMMMMMMMMM.
-                          -NMMMMMMMMMMMMMMMMN-      -mMMMMMMMMm
-                           oMMMMMMMMMMMMMMMN:    ./hNMMMMMMMMMo
-                            sNMMMMMMMMMMMMm:   -smNdoNMMMMMMMm.
-                             /dNMMMMMMMMNy. ./hNNy:  MMMMMMMN:
-                               :oydmmmdo- -smNd+.   /MMMMMMM+
-                                        /hMNy:      hMMMMMN+
-                                      :dMNo.       /MMMMMm:
-                                     +NMN-        -NMMMNs.
-                                    -MMMo        /NMMNy-
-                                    /MMMd.     :hMMmo-
-                                     dMMMmyosymNds:
-                                      :syhhys+:.
-
-				      vj.autometrics
 INTEGRATED 12/12
     social login status (non-interation) (inspired by) http://www.seomoz.org/blog/visitor-social-network-login-status-google-analytics
     CV4 from cookie
@@ -77,6 +84,7 @@ _vj = {
     ,trackViewport:	_vj.autometrics.trackViewport || false
     ,trackScroll:	_vj.autometrics.trackScroll || false
     ,trackSocial:	_vj.autometrics.trackSocial || false
+    ,configSocial:	_vj.autometrics.configSocial || {}
     ,useAddThis:	_vj.autometrics.useAddThis || false
     ,useShareThis:	_vj.autometrics.useShareThis || false
     ,useDoubleclick:	_vj.autometrics.useDoubleclick || false
@@ -676,9 +684,10 @@ USAGE
 
 if(_vj.trackSocial){
     setTimeout(
-	function(){_vj.checkSocial({
-	    beaconName: 'app id from service'//example// ,facebook: '1234567890'
-	});}
+	function(){_vj.checkSocial(
+	    _vj.configSocial
+	    //{beaconName: 'app id from service'//example// ,facebook: '1234567890'}
+	);}
     , 3000); // add slight delay to avoid overflowing the event buffer (10 events onload, replenish at 1 per sec https://developers.google.com/analytics/devguides/collection/other/limits-quotas)
 }
 
