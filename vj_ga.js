@@ -628,10 +628,6 @@ USAGE
 		init: function(name){
 		    thisAppId = this.appId;
 		    window.fbAsyncInit = function(thisAppId){
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+thisAppId);
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+facebook.appId);
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+beacons.facebook.appId);
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+caller.appId);
 			/*FB.Event.subscribe('auth.statusChange', function(response) {
 			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
 			    if(response.status == 'connected') {
