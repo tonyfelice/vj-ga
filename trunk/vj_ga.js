@@ -654,10 +654,10 @@ USAGE
     //define the main routine using any objects passed to function
     ,checkSocial = function (opts) {
 	dataHandler = (_vj.debug) ? logStatusDebug : logStatus;
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+opts.facebook);
-	console.log((opts.facebook)?'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!true':'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!false');
 	if(opts.facebook) {
 	    beacons.facebook.appId = opts.facebook;
+	    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+beacons.facebook.appId);
+	    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+opts.facebook);
 	}
 	if(opts.callback) {  //override native logStatus handler with custom callback
 	    dataHandler = opts.callback;
