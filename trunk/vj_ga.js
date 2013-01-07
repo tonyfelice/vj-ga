@@ -626,10 +626,10 @@ USAGE
 	    facebook: { 
 		src: '//connect.facebook.net/en_US/all.js',
 		init: function(name){
-		    window.fbAsyncInit = function(){
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+this.appId);
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+parent.appId);
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+parent.beacons.facebook.appId);
+		    thisAppId = this.appId;
+		    window.fbAsyncInit = function(thisAppId){
+			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+thisAppId);
+			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+facebook.appId);
 			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+beacons.facebook.appId);
 			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+caller.appId);
 			/*FB.Event.subscribe('auth.statusChange', function(response) {
@@ -638,7 +638,7 @@ USAGE
 				dataHandler(name, response.status);
 			    }
 			});*/
-			FB.init({ appId:String(this.appId), status:true, cookie:true, xfbml:true});
+			FB.init({ appId:String(thisAppId), status:true, cookie:true, xfbml:true});
 			FB.getLoginStatus(function(response){
 			    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+response.status);
 			    dataHandler(name, response.status!=='unknown');
