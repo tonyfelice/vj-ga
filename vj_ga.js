@@ -77,7 +77,7 @@ _vj = {
     ,trackParams:	_vj.autometrics.trackParams || []
     ,primary:		_vj.autometrics.primary || false
     ,secondary:		_vj.autometrics.secondary || false
-    ,userDefined:	_vj.autometrics.userDefined || false
+    ,useReferrer:	_vj.autometrics.useReferrer || false
     ,customVars:	_vj.autometrics.customVars || false
     ,trackClicks:	_vj.autometrics.trackClicks || false
     ,trackForms:	_vj.autometrics.trackForms || false
@@ -196,8 +196,8 @@ make cookies! YUM!  bakery functions credited to http://www.quirksmode.org/js/co
 set the user defined var
 ~*~*~*~*~*~*~*~*~*~*~*~*~*/
 try{
-    if(_vj.userDefined !== false && _vj.userDefined.length > 0 && (_vj.cookeez.eat('_vj-utm-ud') === false)){
-	_gaq.push(['_setVar', _vj.userDefined]);
+    if(_vj.useReferrer !== false && document.referrer.length > 0 && (_vj.cookeez.eat('_vj-utm-ud') === false)){
+	_gaq.push(['_setVar', document.referrer]);
     }
     //bake a cookie so we know we've been through
     _vj.cookeez.bake('_vj-utm-ud','init',false);
@@ -738,20 +738,25 @@ I've iterated them below, along with a mnemonic in parentheses.
 	    return out;
 	}
 	,getCV: function(slot){
-	    var cky = '__utmv'
-	    ,val = this.getCky(cky,1) // make sure you extend with a bakery when you init
-	    ,out = false;
-	    if (val.length === 0){ 
-		return out;
-	    }else{
-		val = val.split('|');
-		val = val[1].split('^');
-		for(j=0; j<val.length; j++){
-		    if(val[j].charAt(0) == slot){
-			out = val[j].split('=');
+	    try{
+		var cky = '__utmv'
+		,val = this.getCky(cky,1) // make sure you extend with a bakery when you init
+		,out = false;
+		if (val.length === 0){ 
+		    return out;
+		}else{
+		    val = val.split('|');
+		    val = val[1].split('^');
+		    for(j=0; j<val.length; j++){
+			if(val[j].charAt(0) == slot){
+			    out = val[j].split('=');
+			}
 		    }
+		    return out;		
 		}
-		return out;		
+	    }catch(err){
+		console.log('error:getCV; val:'+typeof(val)+'; '+err);
+		return false;
 	    }
 	}
 	,setCV: function(gaScope){
