@@ -500,7 +500,7 @@ jQuery(function() {
 	    if (jQuery('#vj_doScroll').length && bottom >= jQuery('#vj_doScroll').scrollTop() + jQuery('#vj_doScroll').innerHeight() && !endContent) { // use #vj_doScroll id on any object you want to detect
 		currentTime = new Date();
 		contentScrollEnd = currentTime.getTime();
-		timeToContentEnd = doTime(contentScrollEnd, scrollStart);
+		timeToContentEnd = doTime(contentScrollEnd, beginning);
 		if (!_vj.debug) {
 		    _gaq.push(['_trackEvent', 'scrolling', 'ContentBottom', timeToContentEnd, undefined, false]);
 		} else {
@@ -514,9 +514,9 @@ jQuery(function() {
 	    if (bottom >= height && !didComplete) {
 		currentTime = new Date();
 		end = currentTime.getTime();
-		totalTime = doTime(end, scrollStart);
+		totalTime = doTime(end, beginning);
 		if (!_vj.debug) {
-		    if (totalTime < 60 && !attention) {
+		    if ((Math.round((end - beginning) / 100)/10) < 15 && !attention) {
 			//_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Scanner', 2]);
 			_gaq.push(['_trackEvent', 'attention', location.pathname+' : scanner', totalTime, undefined, false ]);
 		    } else if(!attention){
@@ -538,7 +538,7 @@ jQuery(function() {
 	    if (jQuery(window).scrollTop() == 0 && scroller) {
 		currentTime = new Date();
 		end = currentTime.getTime();
-		timeToScroll = doTime(end, scrollStart);
+		timeToScroll = doTime(end, beginning);
 		if (!_vj.debug) {
 		    _gaq.push(['_trackEvent', 'scrolling', 'back to top', timeToScroll, undefined, false ]);
 		} else {
