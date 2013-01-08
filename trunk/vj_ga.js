@@ -763,7 +763,7 @@ I've iterated them below, along with a mnemonic in parentheses.
 	    try {
 		var id = this.getId()
 		,cv = this.getCV(4);
-		if (cv == false || cv[2] != id){ // ||cv4 neq id
+		if (id != false && (cv == false || cv[2] != id)){ // ||cv4 neq id
 		    if(_vj.debug){
 			console.log("'_setCustomVar', 1, 'r', "+ document.referrer +", 1");
 			console.log("'_setCustomVar', 2, 'l', "+this.crop(window.location.pathname)+", 1");
@@ -827,6 +827,13 @@ jQuery(document).ready(function(){
 	_vj.cvTools.setCV(_gaq);
     }
 });
+
+if(_vj.customVars){
+    _vj.cvTools.getCky = _vj.cookeez.eat;
+    setTimeout(
+	function(){_vj.cvTools.setCV(_gaq);}
+    , 2000); // give a little time for the cookies to bake
+}
 
 
 /*~*~*~*~*~*~*~*~*~*~*~*~*
