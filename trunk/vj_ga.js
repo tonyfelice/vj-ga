@@ -98,24 +98,26 @@ _vj.utmhost = '.' + _vj.arrhost[_vj.arrhost.length-2] + '.' + _vj.arrhost[_vj.ar
 This section sets up the baseline GATC
 ~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
-try{			
-    _gaq.push(
-	['_setAccount', _vj.primary]
-	,['_setDomainName', _vj.utmhost]
-	,['_setAllowLinker', ((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)]
-	,['_setAllowHash', !((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)]
-	,['_trackPageview']
-    );
-    if(_vj.secondary !== false && _vj.secondary.length > 0){
+try{
+    if(typeof(_vj.runonce) !== 'undefined'){
 	_gaq.push(
-	    ['b._setAccount', _vj.secondary]
-	    ,['b._setDomainName', _vj.utmhost]
-	    ,['b._setAllowLinker', ((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)]
-	    ,['b._setAllowHash', !((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)]
-	    ,['b._trackPageview']
+	    ['_setAccount', _vj.primary]
+	    ,['_setDomainName', _vj.utmhost]
+	    ,['_setAllowLinker', ((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)]
+	    ,['_setAllowHash', !((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)]
+	    ,['_trackPageview']
 	);
+	if(_vj.secondary !== false && _vj.secondary.length > 0){
+	    _gaq.push(
+		['b._setAccount', _vj.secondary]
+		,['b._setDomainName', _vj.utmhost]
+		,['b._setAllowLinker', ((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)]
+		,['b._setAllowHash', !((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)]
+		,['b._trackPageview']
+	    );
+	}
     }
-    
+    _vj.runonce = false;
 } catch(err) { console.log(err); }
 
 
