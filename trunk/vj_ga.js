@@ -99,7 +99,7 @@ This section sets up the baseline GATC
 ~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
 try{
-    if(typeof(_vj.runonce) !== 'undefined'){
+    if(typeof(_vj.runonce) === 'undefined'){
 	_gaq.push(
 	    ['_setAccount', _vj.primary]
 	    ,['_setDomainName', _vj.utmhost]
@@ -117,7 +117,7 @@ try{
 	    );
 	}
     }
-    _vj.runonce = false;
+    _vj.runonce = true;
 } catch(err) { console.log(err); }
 
 
