@@ -130,6 +130,7 @@ _vj.utmhost = '.' + _vj.arrhost[_vj.arrhost.length - 2] + '.' + _vj.arrhost[_vj.
 This section sets up the baseline GATC
 ~*~*~*~*~*~*~*~*~*~*~*~*~*/
 
+/*
 try {
     if (typeof(_vj.runonce) === 'undefined') {
         _gaq.push(['_setAccount', _vj.primary], ['_setDomainName', _vj.utmhost], ['_setAllowLinker', ((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)], ['_setAllowHash', !((_vj.allowDomain) !== 'undefined' && _vj.allowDomain.length > 1)], ['_trackPageview']);
@@ -141,7 +142,7 @@ try {
 } catch(err) {
     console.log(err);
 }
-
+*/
 /*
 ~*~*~*~*~*~*~*~*~*~*~*~*~*
 make cookies! YUM!  bakery functions credited to http://www.quirksmode.org/js/cookies.html, with minor and architectural mods.  I'm taking full credit for the name cookeez (you have to say it with a cookie monster accent).  Cool right?
