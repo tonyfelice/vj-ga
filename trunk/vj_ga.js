@@ -73,6 +73,37 @@ This section handles config and init
 //var _vj = _vj || {};
 
 var _vj = {
+		autometrics: {
+			allowDomain:	[	//required
+				'responsiblebynature.com'
+				,'!xcelenergy.com'
+				,'!bulbblasters.com'
+			]
+			,primary:	'UA-12433454-8'	//testing(8) live(7)
+			,secondary:	true
+			,trackClicks:	true
+			,trackForms:	true
+			,trackViewport:	true
+			,trackScroll:	true
+			,trackSocial:	true
+			,configSocial:	{
+				facebook:'323269097779888'}
+			,useReferrer:	true
+			,customVars:	true
+			,debug:		false
+			,useAddThis:	true
+			,useShareThis:	false
+			,useDoubleclick:true
+			,trackParams:	[
+				'distance[postal_code]'
+				,'distance%5Bpostal_code%5D'
+				,'state'
+			]
+		}
+	};
+
+
+/*_vj = {
     allowDomain: _vj.autometrics.allowDomain || [],
     trackParams: _vj.autometrics.trackParams || [],
     primary: _vj.autometrics.primary || false,
@@ -91,6 +122,7 @@ var _vj = {
     debug: _vj.autometrics.debug || false,
     arrhost: location.hostname.split('.')
     };
+    */
 _vj.utmhost = '.' + _vj.arrhost[_vj.arrhost.length - 2] + '.' + _vj.arrhost[_vj.arrhost.length - 1];
 
 /*
