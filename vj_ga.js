@@ -70,40 +70,9 @@ INTEGRATED 12/12
 ~*~*~*~*~*~*~*~*~*~*~*~*~*
 This section handles config and init
 ~*~*~*~*~*~*~*~*~*~*~*~*~*/
-//var _vj = _vj || {};
+var _vj = _vj || {};
+_vj.autometrics = _vj.autometrics || {};
 
-var _vj = {
-		autometrics: {
-			allowDomain:	[	//required
-				'responsiblebynature.com'
-				,'!xcelenergy.com'
-				,'!bulbblasters.com'
-			]
-			,primary:	'UA-12433454-8'	//testing(8) live(7)
-			,secondary:	true
-			,trackClicks:	true
-			,trackForms:	true
-			,trackViewport:	true
-			,trackScroll:	true
-			,trackSocial:	true
-			,configSocial:	{
-				facebook:'323269097779888'}
-			,useReferrer:	true
-			,customVars:	true
-			,debug:		false
-			,useAddThis:	true
-			,useShareThis:	false
-			,useDoubleclick:true
-			,trackParams:	[
-				'distance[postal_code]'
-				,'distance%5Bpostal_code%5D'
-				,'state'
-			]
-		}
-	};
-
-_vj.autometrics.secondary = (document.location.href.indexOf('business.resp') == -1) ? 'UA-12433454-1' : 'UA-12433454-3';
-var _gaq = _gaq || [];
 
 _vj = {
     allowDomain: _vj.autometrics.allowDomain || [],
