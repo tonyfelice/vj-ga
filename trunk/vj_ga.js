@@ -122,9 +122,9 @@ var _vj = {
     debug: _vj.autometrics.debug || false,
     arrhost: location.hostname.split('.')
     };
-    */
-_vj.utmhost = '.' + _vj.arrhost[_vj.arrhost.length - 2] + '.' + _vj.arrhost[_vj.arrhost.length - 1];
 
+_vj.utmhost = '.' + _vj.arrhost[_vj.arrhost.length - 2] + '.' + _vj.arrhost[_vj.arrhost.length - 1];
+*/
 /*
 ~*~*~*~*~*~*~*~*~*~*~*~*~*
 This section sets up the baseline GATC
