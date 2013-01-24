@@ -602,7 +602,7 @@ try{
 	
 	,loadImg = function(src, name){ //handler for loading images
 	    var i = new Image();
-	    i.onload=function(){dataHandler(name, true); i.onload=null; i.onerror=null; i=null; };
+	    i.onload=function(){dataHandler(name, true); i=i.onload=i.onerror=null; //deallocate i and children, so that it's available next pass, same as i.onerror=null;i=null; etc };
 	    i.onerror=function(){dataHandler(name, false); i=i.onload=i.onerror=null; }; 
 	    i.src=src;
 	}
