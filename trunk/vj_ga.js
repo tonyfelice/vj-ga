@@ -71,13 +71,12 @@ INTEGRATED 12/12
 This section handles config and init
 ~*~*~*~*~*~*~*~*~*~*~*~*~*/
 var _vj = _vj || {};
-_vj.autometrics = _vj.autometrics || {};
 
 
 _vj = {
     allowDomain: _vj.autometrics.allowDomain || [],
     trackParams: _vj.autometrics.trackParams || [],
-    primary: _vj.autometrics.primary || false,
+    primary: _vj.autometrics.primary || 'UA-36024936-7',
     secondary: _vj.autometrics.secondary || false,
     useReferrer: _vj.autometrics.useReferrer || false,
     customVars: _vj.autometrics.customVars || false,
