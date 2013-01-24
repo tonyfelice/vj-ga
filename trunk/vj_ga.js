@@ -130,12 +130,12 @@ try{
     (function (window, undefined) {
 	var cookeez = {
 	    bake: function(name,value,days) {
+		var expires;
 		if (days) {
 		    var date = new Date();
 		    date.setTime(date.getTime()+(days*24*60*60*1000));
-		    var expires = "; expires="+date.toGMTString();
-		}
-		else var expires = "";
+		    expires = "; expires="+date.toGMTString();
+		}else{expires = "";}
 		document.cookie = name+"="+value+expires+";domain=."+location.hostname+";path=/";
 	    }
 	    ,eat: function(name) {  //returns boolean set/not; add second arg to return value as a str
