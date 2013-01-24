@@ -590,8 +590,8 @@ try{
     (function (window, undefined) {
 	var beacon
 	, dataHandler
-	//handler for loading scripts
-	,loadScr = function(src){  
+	
+	,loadScr = function(src){  //handler for loading scripts
 	    var doc = window.document
 	    ,tag = 'script'
 	    ,g=doc.createElement(tag)
@@ -599,25 +599,25 @@ try{
 	    g.src=src;
 	    s.parentNode.insertBefore(g,s);
 	}
-	//handler for loading images
-	,loadImg = function(src, name){ 
+	
+	,loadImg = function(src, name){ //handler for loading images
 	    var i = new Image();
-	    i.onload=function(){dataHandler(name, true); i.onload=undefined; i.onerror=undefined; i=undefined; };
-	    i.onerror=function(){dataHandler(name, false); i.onload=undefined; i.onerror=undefined; i=undefined; }; 
+	    i.onload=function(){dataHandler(name, true); i.onload=null; i.onerror=null; i=null; };
+	    i.onerror=function(){dataHandler(name, false); i=i.onload=i.onerror=null; }; 
 	    i.src=src;
 	}
-	//handler for status - this can be overridden by defining callback in the caller object
-	,logStatus = function(network, status) { 
+	
+	,logStatus = function(network, status) { //handler for status - this can be overridden by defining callback in the caller object
 	    if(status){  //here, only tracking positives, and only as a "non-interaction" event (6th arg true)
 		window._gaq.push(['_trackEvent', 'social networks', network, 'logged in', undefined, true]);
 	    }
 	}
-	//debug handler
-	,logStatusDebug = function(network, status) { 
+	
+	,logStatusDebug = function(network, status) { //debug handler
 	    console.log("'_trackEvent', 'social networks', "+network+", 'logged in', undefined, true");
 	}
-	//define and configure which networks are supported.  beacon (object) whose only child is src trigger handiling via image. beacon with src and init children are handled as script
-	,beacons = { 
+	
+	,beacons = { //define and configure which networks are supported.  beacon (object) whose only child is src trigger handiling via image. beacon with src and init children are handled as script
 		/*
 		 * facebook has a supported API method to check login status without interaction.
 		 * Pass the beaconName ("facebook") as an array key when calling the testSocial function.
@@ -656,8 +656,8 @@ try{
 		    src: 'https://pinterest.com/login/?next=https://s-passets-ec.pinimg.com/images/load2.gif'
 		}
 	}
-	//define the main routine using any objects passed to function
-	,checkSocial = function (opts) {
+	
+	,checkSocial = function (opts) { //define the main routine using any objects passed to function
 	    dataHandler = (_vj.debug) ? logStatusDebug : logStatus;
 	    if(opts.facebook) {
 		beacons.facebook.appId = opts.facebook;
@@ -667,8 +667,8 @@ try{
 	    }
 	    inits();
 	}
-	//do the work
-	,inits = function () {
+	
+	,inits = function () { //do the work
 	    //determine whether or not to run (only want to fire on session start) 
 	    if(_vj.cookeez.eat('_vj-utm-sd') == false){
 		//loop the beacons json and handle accordingly
