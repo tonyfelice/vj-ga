@@ -116,7 +116,7 @@ try {
     jQuery(document).ready(function () {
         var thishost = location.hostname;
         var regex = /^http(s)?\:\/\//i;
-        var fileregex = /^[^#\?]\.(xml|rss|json|pdf|gif|jpg|png|txt|doc|docx|dmg|xls|xlsx|ppt|pptx|swf|wav|wma|mp3|mp4|mpg|mov|msi|exe|ics|vcf|zip|sit|rar|gz)($|[#\?])/i;
+        var fileregex = /^[^#\?]*\.(xml|rss|json|pdf|gif|jpg|png|txt|doc|docx|dmg|xls|xlsx|ppt|pptx|swf|wav|wma|mp3|mp4|mpg|mov|msi|exe|ics|vcf|zip|sit|rar|gz)($|[#\?])/i;
         _vj.frmOrder = 1;
         jQuery("a").each(function () {
             try {
