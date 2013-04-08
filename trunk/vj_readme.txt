@@ -60,7 +60,7 @@ vj_ga.js
 
 
 vj_ga.min.js
-vj_ga.js minified using the YUI compressor 2.4.4
+vj_ga.js minified using the YUI compressor 2.4.4 (http://refresh-sf.com/yui/) without the use of symbol obfuscation
 
 
 
@@ -94,7 +94,7 @@ _vj.autometrics.configSocial	optional	scalar (obj)	config obj for social detecti
 _vj.autometrics.useShareThis	optional	boolean		set ShareThis social action hooks	does not install the plugin, simply configures
 _vj.autometrics.useAddThis	optional	boolean		set AddThis social action hooks		does not install the plugin, simply configures
 _vj.autometrics.useDoubleclick	optional	boolean		loads dc.js instead of ga.js		does not install the plugin, simply configures
-_vj.autometrics.userDefined	optional	string		set value of 'user defined' slot	can pass a string, or any expression that evaluates to one
+_vj.autometrics.useReferrer	optional	boolean		set referrer in 'user defined' slot	uses document.referrer
 _vj.autometrics.customVars	optional	boolean		disable custom variable tracking	can be used to globally disable first touch referrer storage
 _vj.autometrics.debug		optional	boolean		disable events/CVs and log to console	still fires trackPageview and performs any x-domain handling
 
