@@ -1,4 +1,109 @@
+/*
+                                                                          .-==-,                            
+                                                                       =#########;                          
+                                                                     -############                          
+                                                                    ;############                           
+                                                                    .#########X;         .,,,,.             
+                               .;=xX##X+.                             -+xx+-      ,=x#############=         
+                           -x#############                                    =######################.      
+                       ;x##################      vj.autometrics         .=############################=     
+                    -#######################                       ,+##########+-,          ,+#########-    
+                 ,X#########################,                  ;x#######X=,                    -########    
+               =#############################              -X######x-                           ,#######    
+             x###############################          -x######=.                                X######    
+          .X####+.       ;###################-     ,x#####X-      .#################-            ;######    
+         X###x             ##################x .+#####X;         .################               ;#####x    
+       x####               ,######################X;             ################+               +#####     
+     .#####.                ##################x;                #################+               #####-     
+     ######                 ##################                 #### #############=              x####x      
+    +#######                ,#################+               x###, #############-             ;####x       
+    ,########-              -##################              =####  #############;            .####x        
+     -##########x=;;;--+#######################.            ,####   #############.           ,####+         
+       =##################X; +#################+            ####x   #############           -####-          
+          ,=xX######x=;      ,##################           #####   .#############          +####.           
+                              ##################          #####=   .#############         ####x             
+                              ##################=        x#####    .#############       -####;              
+                              x##################       =#####;    ,#############      X###x                
+                              ;##################      ;######     ;#############    -####.                 
+                               ##################-    .######      -#############  .####=                   
+                               ###################    ######x      -############+ x###x                     
+                               -##################   #######       -################X                       
+                                ##################, x######-       -###############                         
+                                x#################+;######X        =############X                           
+                                .#########################         =############                            
+                                 x#######################,         =############                            
+                                  ######################=         .X###########+                            
+                                  -####################+        +##############                             
+                                   =##################=      ;####+x##########x                             
+                                    ,################,     +####;  +##########                              
+                                      -x###########=    -####+     ##########.                              
+                                         ,-+x##x=.    +####;       #########;                               
+                                                   .####x         x########,                                
+                                                 ,####-           ########                                  
+                                                X###;            #######+                                   
+                                               ####.            X######.                                    
+                                              x####            ######,                                      
+                                              #####          =####x.                                        
+                                              X#####,     ;X####-                                           
+                                               +#############-                                              
+                                                 ;+X####+;       
 
+INTEGRATED 12/12
+    social login status (non-interation) (inspired by) http://www.seomoz.org/blog/visitor-social-network-login-status-google-analytics
+    CV4 from cookie
+    prevent form data
+    pagename in clicks and forms 
+    event validation (verify all strings, verify that only interactions send interactions)
+    non-interaction events
+    viewport detection
+    scroll detect Time to scroll? Too soon? - http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analytics-part-1/
+    multiple tracker support - full session is mirrored to the secondary account, events are only sent to primary
+    set user defined var
+    abstracted config vars to caller
+    Addthis/shareThis support (inspired by) http://support.addthis.com/customer/portal/articles/381260-google-analytics-integration#.UN-U75G9KSM
+    doubleclick remarketing (dc.js) support
+    
+INTEGRATED 3/13
+    conditionals around all console.logs (for IE) - enable console logging thru the _vj.debug param
+    conditionals for addthis / sharethis; prevent errors when true, but not present in DOM
+    
+INTEGRATED 7/13
+    support for uri fragments (anchors,hashtags,hashbangs etc)
+    tracking chained domains (movement across allowed domains) as virtual pv /chained/
+    
+TO DO:
+    climb up and find a link
+    swap src on iframes that match allow domain
+    prevent on iframes that match allow domain but don't match uid
+    default value params events
+    event to data layer
+    ranktracker
+        /*
+        // credited to @ajkohn blindfiveyearold.com / ht @cutroni
+        if (document.referrer.match(/google\.com/gi) && document.referrer.match(/cd/gi)) {
+            var myString = document.referrer;
+            var r        = myString.match(/cd=(.*?)&/);
+            var rank     = parseInt(r[1]);
+            var kw       = myString.match(/q=(.*?)&/);
+            
+            if (kw[1].length > 0) {
+                var keyWord  = decodeURI(kw[1]);
+            } else {
+                keyWord = "(not provided)";
+            }
+        
+            var p        = document.location.pathname;
+            _gaq.push(['_trackEvent', 'ranktracker', keyWord, p, rank, true]);
+        }
+        * /
+
+*/
+
+
+/*
+~*~*~*~*~*~*~*~*~*~*~*~*~*
+This section handles config and init
+~*~*~*~*~*~*~*~*~*~*~*~*~*/
 try {
     var _vj = _vj || {};
     _vj = {
@@ -7,6 +112,7 @@ try {
         primary: _vj.autometrics.primary || "UA-36024936-7",
         secondary: _vj.autometrics.secondary || false,
         useReferrer: _vj.autometrics.useReferrer || false,
+        useFragment: _vj.autometrics.useFragment || false,
         customVars: _vj.autometrics.customVars || false,
         trackClicks: _vj.autometrics.trackClicks || false,
         trackForms: _vj.autometrics.trackForms || false,
@@ -21,11 +127,26 @@ try {
         arrhost: location.hostname.split(".")
     };
     _vj.utmhost = "." + _vj.arrhost[_vj.arrhost.length - 2] + "." + _vj.arrhost[_vj.arrhost.length - 1];
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    This section sets up the baseline GATC
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*/
+    
     try {
         if (typeof (_vj.runonce) === "undefined") {
-            _gaq.push(["_setAccount", _vj.primary], ["_setDomainName", _vj.utmhost], ["_setAllowLinker", ((_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 1)], ["_setAllowHash", !((_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 1)], ["_trackPageview"]);
+            var thispg = (document.location.pathname + document.location.search + ((_vj.useFragment) ? document.location.hash : '')).toLowerCase();
+            _gaq.push(["_setAccount", _vj.primary]
+                      , ["_setDomainName", _vj.utmhost]
+                      , ["_setAllowLinker", ((_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 1)]
+                      , ["_setAllowHash", !((_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 1)]
+                      , ["_trackPageview", thispg]);
             if (_vj.secondary !== false && _vj.secondary.length > 0) {
-                _gaq.push(["b._setAccount", _vj.secondary], ["b._setDomainName", _vj.utmhost], ["b._setAllowLinker", ((_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 1)], ["b._setAllowHash", !((_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 1)], ["b._trackPageview"])
+                _gaq.push(["b._setAccount", _vj.secondary]
+                          , ["b._setDomainName", _vj.utmhost]
+                          , ["b._setAllowLinker", ((_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 1)]
+                          , ["b._setAllowHash", !((_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 1)]
+                          , ["b._trackPageview", thispg]);
             }
         }
         _vj.runonce = true
@@ -33,7 +154,15 @@ try {
         if (_vj.debug) {
             console.log("err: " + err)
         }
-    }(function (window, undefined) {
+    }
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    make cookies! YUM!  bakery functions credited to http://www.quirksmode.org/js/cookies.html, with minor and architectural mods.  I'm taking full credit for the name cookeez (you have to say it with a cookie monster accent).  Cool right?
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    */
+    
+    (function (window, undefined) {
         var cookeez = {
             bake: function (name, value, days) {
                 var expires;
@@ -46,7 +175,7 @@ try {
                 }
                 document.cookie = name + "=" + value + expires + ";domain=." + location.hostname + ";path=/"
             },
-            eat: function (name) {
+            eat: function (name) { //returns boolean set/not; add second arg to return value as a str
                 var nameEQ = name + "=";
                 var jar = document.cookie.split(";");
                 var isSet = false;
@@ -67,8 +196,10 @@ try {
                 bake(name, "", -1)
             }
         };
-        window._vj.cookeez = cookeez
+        window._vj.cookeez = cookeez //promote the fn
     }(window));
+    
+    // jQuery QS plugin
     (function ($) {
         $.querystring = (function (qstr) {
             if (qstr == "") {
@@ -82,6 +213,8 @@ try {
             return result
         })(window.location.search.substr(1).split("&"))
     })(jQuery);
+    
+    // event proxy function to catch from "forms and clicks"
     (function (window, undefined) {
         var _evTrackProxy = function (cat, action, label, el) {
             try {
@@ -101,8 +234,14 @@ try {
                 }
             }
         };
-        window._evTrackProxy = _evTrackProxy
+        window._evTrackProxy = _evTrackProxy //promote the fn - also exposed to flash, so please do not change fn name, and make sure this remains at window scope
     }(window));
+    
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    set the user defined var
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*/
     try {
         if (_vj.useReferrer !== false && document.referrer.length > 0 && (_vj.cookeez.eat("_vj-utm-ud") === false)) {
             _gaq.push(["_setVar", document.referrer])
@@ -113,11 +252,21 @@ try {
             console.log("err: " + err)
         }
     }
+    
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    x-domain linkage and event handlers by tonyfelice (c) vladimir jones GNU GPLv3
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    */
+    
     jQuery(document).ready(function () {
         var thishost = location.hostname;
         var regex = /^http(s)?\:\/\//i;
         var fileregex = /^[^#\?]*\.(xml|rss|json|pdf|gif|jpg|png|txt|doc|docx|dmg|xls|xlsx|ppt|pptx|swf|wav|wma|mp3|mp4|mpg|mov|msi|exe|ics|vcf|zip|sit|rar|gz)($|[#\?])/i;
         _vj.frmOrder = 1;
+        
+         //link handler: x-domain, download, and outbound
         jQuery("a").each(function () {
             try {
                 var tracker = false;
@@ -132,12 +281,16 @@ try {
                                         event.preventDefault();
                                         tracker = _gat._getTrackerByName();
                                         this.href = tracker._getLinkerUrl(this.href);
+                                        //vj_chainwindow will allow the session to cross into iFrames and new tabs
                                         if (jQuery(this).hasClass("vj_chainwindow") || jQuery(this).attr("target") == "_blank" || jQuery(this).attr("rel") == "external") {
                                             window.open(this.href)
                                         } else {
                                             window.location = this.href
                                         }
                                     })
+                                    jQuery(this).click(function () {
+                                        _gaq.push(["_trackPageview", "/chained/" + this.href.replace(regex, "")])
+                                    });
                                 } catch (err) {
                                     if (_vj.debug) {
                                         console.log("link:" + err + "; " + this.href + " getLinkerURL fail")
@@ -150,18 +303,18 @@ try {
                     if (!linkflag) {
                         jQuery(this).click(function () {
                             _gaq.push(["_trackPageview", "/outbound/" + this.href.replace(regex, "")])
-                        })
+                        });
                     }
                 } else {
                     if (thishref != "none" && thishref.search(fileregex) > -1) {
                         jQuery(this).click(function () {
                             _gaq.push(["_trackPageview", "/download/" + this.href.replace(regex, "")])
-                        })
+                        });
                     }
                 }
             } catch (err) {
                 if (_vj.debug) {
-                    console.log("link:" + err + "; " + this.href + " not handled")
+                    console.log("link:" + err + "; " + this.href + " not handled");
                 }
             }
         });
@@ -190,6 +343,7 @@ try {
         jQuery("input,select,textarea,button").each(function () {
             try {
                 var __fld, __frm, __fid;
+                //'vj_noevent' class can be set at the form or element levels, and will disable tracking
                 if (!jQuery(this).hasClass("vj_noevent") && !jQuery(this).hasClass("vj_noevent") && _vj.trackForms) {
                     __fid = (jQuery(this).attr("id").length > 0) ? jQuery(this).attr("id") + ":" : jQuery(this).attr("name") + ":";
                     __fld = (this.id.length > 0) ? __fid + this.id : __fid + this.name;
@@ -225,7 +379,8 @@ try {
                     _evTrackProxy("clicks", target, e.pageX + "," + e.pageY);
                     _vj._thisClickEvent = ePos
                 }
-                try {
+                //test for the presence of a virtual pageview request
+		try {
                     if (jQuery(e.target).hasClass("vj_virtualpage") && _vj._thisClickVirtual != target) {
                         _gaq.push(["_trackPageview", "/virtualpage/" + encodeURI(target)]);
                         _vj._thisClickVirtual = target
@@ -257,7 +412,19 @@ try {
             }
         }
     });
+    
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    Viewport detection by tonyfelice (c) vladimir jones GNU GPLv3
+    
+    fires event on initial load and resize events, as well as height/width flipflop indicating device reorientation
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    */
+    
+    //send to GA window viewport size on inital load and when resized as non-interactive events
     jQuery(function () {
+        // init
         var win = {
             width: 0,
             height: 0,
@@ -267,9 +434,10 @@ try {
             maxW: 0
         };
 
-        function logViewport(state, isPassive) {
+        //track viewport dimensions
+	function logViewport(state, isPassive) {
             try {
-                if (state === "resize" || _vj.cookeez.eat("_vj-utm-lw") === false) {
+                if (state === "resize" || _vj.cookeez.eat("_vj-utm-lw") === false) { //only perform on first run
                     win.width = jQuery(window).width();
                     win.height = jQuery(window).height();
                     win.layout = (win.width > win.height) ? "landscape" : "portrait";
@@ -285,7 +453,8 @@ try {
                         _gaq.push(["_trackEvent", "viewport", state + " width", win.width.toString(), undefined, isPassive]);
                         _gaq.push(["_trackEvent", "viewport", state + " height", win.height.toString(), undefined, isPassive])
                     }
-                    win.preW = win.width;
+                    //reset the placeholder vars
+		    win.preW = win.width;
                     win.preH = win.height;
                     _vj.cookeez.bake("_vj-utm-lv", "init", false)
                 }
@@ -298,7 +467,7 @@ try {
 
         function logWindow() {
             try {
-                if (_vj.cookeez.eat("_vj-utm-lw") === false) {
+                if (_vj.cookeez.eat("_vj-utm-lw") === false) { //only perform on first run  // not tracking height to keep events down - easy enough to pull from "screen resolution" after segmenting viewport width
                     win.maxW = window.screen.availWidth;
                     if (typeof (_vj.debug) !== "undefined" && _vj.debug === true) {
                         console.log("'_trackEvent', 'viewport', 'avail width', " + win.maxW.toString() + ", undefined, true")
@@ -316,36 +485,71 @@ try {
         if (_vj.trackViewport) {
             logViewport("initial", true);
             logWindow();
-            var tmpTimer;
+            
+            //resize listener
+	    var tmpTimer;
             jQuery(window).resize(function () {
                 clearTimeout(tmpTimer);
                 tmpTimer = setTimeout(function () {
                     logViewport("resize", false)
-                }, 500)
+                }, 500); //note: this timer is dormant UNLESS there's a resize event in play
             })
         }
     });
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    Scroll detection
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    
+    based on work by
+    Justin Cutroni
+    Nick Mihailovski
+    Thomas Baekdal
+    Avinash Kaushik
+    Joost de Valk
+    Eivind Savio
+     
+    http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analytics-part-1/
+    
+    */
+    
+    
     jQuery(function () {
-        var callBackTime = 100;
-        var readerLocation = 150;
-        var timer = 0;
+        
+        // Default time delay before checking location
+	var callBackTime = 100;
+        
+        // # px before tracking a reader
+	var readerLocation = 150;
+        
+	// Set some flags for tracking & execution
+	var timer = 0;
         var scroller = false;
         var endContent = false;
         var didComplete = false;
         var attention = false;
-        var startTime = new Date();
+        
+	// Set some time variables to calculate reading time
+	var startTime = new Date();
         var beginning = startTime.getTime();
         var totalTime = 0;
 
-        function doTime(a, b) {
+        // Track the aticle load?
+	//_gaq.push(['_trackEvent', 'scrolling', 'loaded', '', undefined, true]);
+	
+	//process the timer
+	function doTime(a, b) {
             return (Math.round((a - b) / 100) / 10).toString() + " sec"
         }
 
-        function scrollPosition() {
+        // Check the location and track user
+	function scrollPosition() {
             try {
                 bottom = jQuery(window).height() + jQuery(window).scrollTop();
                 height = jQuery(document).height();
-                if (bottom > readerLocation && !scroller) {
+                // If user starts to scroll send an event
+		if (bottom > readerLocation && !scroller) {
                     currentTime = new Date();
                     scrollStart = currentTime.getTime();
                     timeToScroll = doTime(scrollStart, beginning);
@@ -356,6 +560,8 @@ try {
                     }
                     scroller = true
                 }
+                
+                // use #vj_doScroll id on any object you want to detect
                 if (jQuery("#vj_doScroll").length && bottom >= jQuery("#vj_doScroll").scrollTop() + jQuery("#vj_doScroll").innerHeight() && !endContent) {
                     currentTime = new Date();
                     contentScrollEnd = currentTime.getTime();
@@ -365,20 +571,24 @@ try {
                     } else {
                         console.log("'_trackEvent', 'scrolling', 'ContentBottom', '', " + timeToContentEnd + ", undefined, false")
                     }
-                    endContent = true
+                    endContent = true;
                 }
-                if (bottom >= height && !didComplete) {
+                
+		
+		// If user has hit the bottom of page send an event
+		if (bottom >= height && !didComplete) {
                     currentTime = new Date();
                     end = currentTime.getTime();
                     totalTime = doTime(end, beginning);
                     if (!_vj.debug) {
                         if ((Math.round((end - beginning) / 100) / 10) < 15 && !attention) {
-                            _gaq.push(["_trackEvent", "attention", location.pathname + " : scanner", totalTime, undefined, false])
-                        } else {
-                            if (!attention) {
-                                _gaq.push(["_trackEvent", "attention", location.pathname + " : reader", totalTime, undefined, false])
-                            }
-                        }
+                            //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Scanner', 2]);
+			    _gaq.push(["_trackEvent", "attention", location.pathname + " : scanner", totalTime, undefined, false])
+                        } else if(!attention){
+			    //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Reader', 2]);
+			    _gaq.push(['_trackEvent', 'attention', location.pathname+' : reader', totalTime, undefined, false ]);
+			}
+			
                         _gaq.push(["_trackEvent", "scrolling", "page bottom", totalTime, undefined, false])
                     } else {
                         console.log("'_trackEvent', 'scrolling', 'page bottom', " + totalTime + ", undefined, false");
@@ -387,9 +597,11 @@ try {
                         }
                     }
                     attention = true;
-                    didComplete = true
+                    didComplete = true;
                 }
-                if (jQuery(window).scrollTop() == 0 && scroller) {
+                
+		// If user returns to top send an event
+		if (jQuery(window).scrollTop() == 0 && scroller) {
                     currentTime = new Date();
                     end = currentTime.getTime();
                     timeToScroll = doTime(end, beginning);
@@ -399,7 +611,8 @@ try {
                         console.log("'_trackEvent', 'scrolling', 'back to top', " + timeToScroll + ", undefined, false ")
                     }
                     scroller = true;
-                    didComplete = false
+                    //possible that they were simply looking to see how long it was before reading, let's allow pagebottom to fire again.
+                    didComplete = false;
                 }
             } catch (err) {
                 if (_vj.debug) {
@@ -407,17 +620,42 @@ try {
                 }
             }
         }
-        if (_vj.trackScroll) {
+        
+	// Track the scrolling and track location
+	if (_vj.trackScroll) {
             jQuery(window).scroll(function () {
                 if (timer) {
                     clearTimeout(timer)
                 }
-                timer = setTimeout(scrollPosition, callBackTime)
+                // Use a buffer so we don't call trackLocation too often.
+		timer = setTimeout(scrollPosition, callBackTime)
             })
         }
     });
+    
+    
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    Social login detection by tonyfelice (c) vladimir jones GNU GPLv3
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    inspired by Tom Anthony http://www.seomoz.org/blog/visitor-social-network-login-status-google-analytics
+    ur idea ftw, but my fn is tehottnez tom ;-)
+    
+    
+    USAGE
+    <script src="vj_ga_social.js"></script>
+    <script>
+	checkSocial({
+	    facebook: 'exampleAppId1234567890'
+	    ,callback: optionalFn
+	});
+    </script>
+      
+     */
     (function (window, undefined) {
         var beacon, dataHandler, loadScr = function (src) {
+                //handler for loading scripts
                 var doc = window.document,
                     tag = "script",
                     g = doc.createElement(tag),
@@ -425,7 +663,10 @@ try {
                 g.src = src;
                 s.parentNode.insertBefore(g, s)
             }, loadImg = function (src, name) {
+                //handler for loading images
                 var i = new Image();
+                
+                // deallocate i and children, so that it's available next pass, same as i.onerror=null;i=null; etc
                 i.onload = function () {
                     dataHandler(name, true);
                     i = i.onload = i.onerror = null
@@ -434,7 +675,8 @@ try {
                     dataHandler(name, false);
                     i = i.onload = i.onerror = null
                 };
-                i.src = src
+                i.src = src;
+                
             }, logStatus = function (network, status) {
                 if (status) {
                     window._gaq.push(["_trackEvent", "social networks", network, "logged in", undefined, true])
@@ -442,6 +684,15 @@ try {
             }, logStatusDebug = function (network, status) {
                 console.log("'_trackEvent', 'social networks', " + network + ", 'logged in', undefined, true")
             }, beacons = {
+                //define and configure which networks are supported.  beacon (object) whose only child is src trigger handiling via image. beacon with src and init children are handled as script
+		/*
+		 * facebook has a supported API method to check login status without interaction.
+		 * Pass the beaconName ("facebook") as an array key when calling the testSocial function.
+		 * The value of the array key should be the appId from fb.
+		 *
+		 * NOTE: the first two chars of a beacon may be passed to custom vars in the future, please ensure they are unique
+		 * 
+		 */
                 facebook: {
                     src: "//connect.facebook.net/en_US/all.js",
                     init: function (name) {
@@ -453,12 +704,13 @@ try {
                                 xfbml: true
                             });
                             FB.getLoginStatus(function (response) {
-                                dataHandler(name, response.status !== "unknown")
+                                dataHandler(name, response.status !== "unknown"); //The status of the User. One of: connected, not_authorized or unknown.
                             }, true)
                         }
                     }
                 },
-                twitter: {
+                // the rest of these networks don't have supported methods, so we're requesting post-login images and triggering onload / onerror accordingly
+		twitter: {
                     src: "https://twitter.com/login?redirect_after_login=%2Fimages%2Fspinner.gif"
                 },
                 google: {
@@ -470,28 +722,35 @@ try {
                 pinterest: {
                     src: "https://pinterest.com/login/?next=https://s-passets-ec.pinimg.com/images/load2.gif"
                 }
-            }, checkSocial = function (opts) {
+            },
+            //define the main routine using any objects passed to function
+            checkSocial = function (opts) {
                 dataHandler = (_vj.debug) ? logStatusDebug : logStatus;
                 if (opts.facebook) {
                     beacons.facebook.appId = opts.facebook
                 }
+                //override native logStatus handler with custom callback
                 if (opts.callback) {
                     dataHandler = opts.callback
                 }
                 inits()
-            }, inits = function () {
+            }, inits = function () {//do the work
+                //determine whether or not to run (only want to fire on session start)     
                 if (_vj.cookeez.eat("_vj-utm-sd") == false) {
+                    //loop the beacons json and handle accordingly
                     for (var name in beacons) {
                         beacon = beacons[name];
-                        if (beacon.appId) {
+                        if (beacon.appId) { //fb is defined, but will not fire unless appId is handed to the fn when called by window
                             loadScr(beacon.src);
                             beacon.init(name)
                         } else {
+                            // !beacon.init is an important test to determine which handler we really need
                             if (beacon.src && !beacon.init) {
                                 loadImg(beacon.src, name)
                             }
                         }
                     }
+                    //bake a cookie so we know we logged
                     _vj.cookeez.bake("_vj-utm-sd", "init", false)
                 }
             };
@@ -500,12 +759,43 @@ try {
     if (_vj.trackSocial) {
         setTimeout(function () {
             _vj.checkSocial(_vj.configSocial)
-        }, 3000)
-    }(function (window, undefined) {
+        }, 3000); // add slight delay to avoid overflowing the event buffer (10 events onload, replenish at 1 per sec https://developers.google.com/analytics/devguides/collection/other/limits-quotas)
+    }
+    
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    cvTools by tonyfelice (c) vladimir jones GNU GPLv3: This section configures 4 of the 5 available Custom Variables.
+    
+    Originally inspired by Will Critchlow (http://attributiontrackingga.googlecode.com); released under GPLv3;
+    initially modified 10/10/10 tfelice
+    12/31/12 [tf]	incorporated new CV4 format (using ^ delim)
+		    rather than only setting on new visits, setting when CV4 does not match cookie ID
+		    Pulling utma ID (was using posix)
+		    externalized/promoted cky lib
+		    packaged and sandboxed
+    
+    Because GA is typically a last-touch attribution tool, the first two custom variables are used to store the referrer and landing  page associated with a user's first visit.
+    The third custom variable stores historical conversion information, and the fourth variable stores a unique identifier for each visitor.
+    These custom variables will exist for the user until cookies are cleared.  Because the slots are limited, and the storage expectation is for the lifetime of the cookie,
+    I've iterated them below, along with a mnemonic in parentheses. 
+    1.	("From")   stores the first touch referrer 
+    2.	("To")   stores the first touch landing page
+    3.	("Free" or "E" as in e-comm)   aggregates historical conversion information in 5 parts:
+	 a.	Total number of conversions for the visitor
+	 b.	Total aggregate value of all historical conversions
+	 c.	Milliseconds elapsed between the current conversion event and the previous 
+	 d.	Time of the current conversion event (posix format)
+	 e.	Time of the first conversion (posix format)
+    4.	("For")   stores a unique identifier for each visitor. In no way personally identifiable, this is the user identifier assigned by Google in the __utma cookie, but otherwise unavailable to GA reporting
+    
+    
+    */
+    (function (window, undefined) {
         var cvTools = {
-            getCky: {},
-            crop: function (str) {
-                var out, sz = 63;
+            getCky: {},  // extension hook; this lib needs cookie getter, but doesn't include it, needs to be extended with a bakery/cookie lib ex: _vj.cvTools.getCky = _vj.cookeez.eat;
+	    crop: function(str) { // cv str size limit is 64, ensure that we're not passing something too long
+	        var out, sz = 63;
                 if (encodeURIComponent(str).substr(sz - 2, 1) == "%") {
                     out = decodeURIComponent(encodeURIComponent(str).substr(0, sz - 2))
                 } else {
@@ -520,7 +810,8 @@ try {
             getCV: function (slot) {
                 try {
                     var cky = "__utmv",
-                        val = this.getCky(cky, 1),
+                        // make sure you extend with a bakery when you init
+                        val = this.getCky(cky, 1), 
                         out = false;
                     if (val.length === 0) {
                         return out
@@ -564,6 +855,7 @@ try {
             },
             getId: function () {
                 var cky = "__utma",
+                    // make sure you extend with a bakery when you init
                     out = this.getCky(cky, 1);
                 if (out.length === 0) {
                     return false
@@ -573,10 +865,10 @@ try {
                 }
             },
             setGoal: function (gaScope, nom, val) {
-                try {
+                try { //fire event 'auto-goal'; set CV3 with: count.total.sincelast.timenow.timefirst
                     var cv = this.getCV(3),
-                        dt = new Date().getTime();
-                    val = Math.round(val);
+                    dt = new Date().getTime();
+                    val = Math.round(val); //round to dollars, looking for the big picture here, and full string is dot delim so decimal in values would conflict.
                     if (cv.length > -1 && cv[1] == "g") {
                         cv = cv[2].split(".");
                         cv[0]++;
@@ -588,7 +880,7 @@ try {
                             gaScope.push(["_setCustomVar", 3, "g", cv[0] + "." + cv[1] + "." + cv[2] + "." + dt + "." + cv[4], 1])
                         }
                     }
-                    if (!cv) {
+                    if (!cv) { //first set
                         if (_vj.debug) {
                             console.log("'_setCustomVar', 3, 'g', 1 +'.'+ " + val + " +'.'+ 0 +'.'+ " + dt + " +'.'+ " + dt + ", 1")
                         } else {
@@ -608,7 +900,7 @@ try {
                 }
             }
         };
-        window._vj.cvTools = cvTools
+        window._vj.cvTools = cvTools; //promote the fn
     }(window));
     jQuery(document).ready(function () {
         if (_vj.customVars) {
@@ -620,8 +912,12 @@ try {
         _vj.cvTools.getCky = _vj.cookeez.eat;
         setTimeout(function () {
             _vj.cvTools.setCV(_gaq)
-        }, 2000)
+        }, 2000); // give a little time for the cookies to bake
     }
+    
+    /*~*~*~*~*~*~*~*~*~*~*~*~*
+     * configure shareThis/AddThis
+     * ~*~*~*~*~*~*~*~*~*~*~*/
     if (_vj.useAddThis) {
         try {
             var addthis_config = {
