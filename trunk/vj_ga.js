@@ -290,7 +290,7 @@ try {
                                         }
                                     })
                                     jQuery(this).click(function () {
-                                        _gaq.push(["_trackPageview", "/chained/" + this.href.replace(regex, "")])
+                                        _gaq.push(["_trackPageview", _vj.pathname + "/chained/" + this.href.replace(regex, "")])
                                     });
                                 } catch (err) {
                                     if (_vj.debug) {
@@ -303,13 +303,13 @@ try {
                     }
                     if (!linkflag) {
                         jQuery(this).click(function () {
-                            _gaq.push(["_trackPageview", "/outbound/" + this.href.replace(regex, "")])
+                            _gaq.push(["_trackPageview", _vj.pathname + "/outbound/" + this.href.replace(regex, "")])
                         });
                     }
                 } else {
                     if (thishref != "none" && thishref.search(fileregex) > -1) {
                         jQuery(this).click(function () {
-                            _gaq.push(["_trackPageview", "/download/" + this.href.replace(regex, "")])
+                            _gaq.push(["_trackPageview", _vj.pathname + "/download/" + this.href.replace(regex, "")])
                         });
                     }
                 }
@@ -371,8 +371,11 @@ try {
                 target[1] = (target[1] == "" && typeof (jQuery(e.target).attr("rel")) !== "undefined" && jQuery(e.target).attr("rel").length > 0) ? "=" + jQuery(e.target).attr("rel") : target[1];
                 if (typeof (jQuery(e.target).attr("href")) != "undefined" && jQuery(e.target).attr("href").length > 0) {
                     target[2] = jQuery(e.target).attr("href");
-                    tmp = target[2].split("?");
+                    tmp = target[2].split("?"); //this is disrespectful of a fragment
                     target[2] = " (href=" + tmp[0] + ")"
+                    if(tmp[0].charAt[0] == "#" && _vj.useFragment){
+                        _gaq.push(["_trackPageview", encodeURI(tmp[0])]);
+                    }
                 }
                 target = target.toString().replace(/,/g, "");
                 target = _vj.pathname + ":" + target;
@@ -383,7 +386,7 @@ try {
                 //test for the presence of a virtual pageview request
 		try {
                     if (jQuery(e.target).hasClass("vj_virtualpage") && _vj._thisClickVirtual != target) {
-                        _gaq.push(["_trackPageview", "/virtualpage/" + encodeURI(target)]);
+                        _gaq.push(["_trackPageview", _vj.pathname + "/virtualpage/" + encodeURI(target)]);
                         _vj._thisClickVirtual = target
                     }
                 } catch (err) {
