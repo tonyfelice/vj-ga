@@ -388,7 +388,7 @@ try {
                 //test for the presence of a virtual pageview request
 		try {
                     if (jQuery(e.target).hasClass("vj_virtualpage") && _vj._thisClickVirtual != vtarget) {
-                        _gaq.push(["_trackPageview", _vj.pathname + "/virtualpage/" + encodeURI(vtarget)]);
+                        _gaq.push(["_trackPageview", "/virtualpage/" + encodeURI(vtarget)]);
                         _vj._thisClickVirtual = vtarget
                     }
                 } catch (err) {
