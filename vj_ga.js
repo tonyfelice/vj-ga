@@ -127,6 +127,8 @@ try {
         arrhost: location.hostname.split(".")
     };
     _vj.utmhost = "." + _vj.arrhost[_vj.arrhost.length - 2] + "." + _vj.arrhost[_vj.arrhost.length - 1];
+    _vj.pathname = (document.location.pathname + ((_vj.useFragment) ? document.location.hash : '')).toLowerCase();
+    
     
     /*
     ~*~*~*~*~*~*~*~*~*~*~*~*~*
@@ -259,7 +261,6 @@ try {
     x-domain linkage and event handlers by tonyfelice (c) vladimir jones GNU GPLv3
     ~*~*~*~*~*~*~*~*~*~*~*~*~*
     */
-    
     jQuery(document).ready(function () {
         var thishost = location.hostname;
         var regex = /^http(s)?\:\/\//i;
@@ -347,7 +348,7 @@ try {
                 if (!jQuery(this).hasClass("vj_noevent") && !jQuery(this).hasClass("vj_noevent") && _vj.trackForms) {
                     __fid = (jQuery(this).attr("id").length > 0) ? jQuery(this).attr("id") + ":" : jQuery(this).attr("name") + ":";
                     __fld = (this.id.length > 0) ? __fid + this.id : __fid + this.name;
-                    __fld = location.pathname + ":" + __fld;
+                    __fld = _vj.pathname + ":" + __fld;
                     jQuery(this).blur(function () {
                         _evTrackProxy("forms", __fld.toString(), "", this)
                     })
@@ -374,7 +375,7 @@ try {
                     target[2] = " (href=" + tmp[0] + ")"
                 }
                 target = target.toString().replace(/,/g, "");
-                target = location.pathname + ":" + target;
+                target = _vj.pathname + ":" + target;
                 if (!jQuery(e.target).parents().andSelf().hasClass("vj_noclick") && _vj._thisClickEvent != ePos && (typeof (_vj.trackClicks) === "undefined" || _vj.trackClicks == true)) {
                     _evTrackProxy("clicks", target, e.pageX + "," + e.pageY);
                     _vj._thisClickEvent = ePos
@@ -583,17 +584,17 @@ try {
                     if (!_vj.debug) {
                         if ((Math.round((end - beginning) / 100) / 10) < 15 && !attention) {
                             //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Scanner', 2]);
-			    _gaq.push(["_trackEvent", "attention", location.pathname + " : scanner", totalTime, undefined, false])
+			    _gaq.push(["_trackEvent", "attention", _vj.pathname + " : scanner", totalTime, undefined, false])
                         } else if(!attention){
 			    //_gaq.push(['_setCustomVar', 5, 'ReaderType', 'Reader', 2]);
-			    _gaq.push(['_trackEvent', 'attention', location.pathname+' : reader', totalTime, undefined, false ]);
+			    _gaq.push(['_trackEvent', 'attention', _vj.pathname+' : reader', totalTime, undefined, false ]);
 			}
 			
                         _gaq.push(["_trackEvent", "scrolling", "page bottom", totalTime, undefined, false])
                     } else {
                         console.log("'_trackEvent', 'scrolling', 'page bottom', " + totalTime + ", undefined, false");
                         if (!attention) {
-                            console.log("'_trackEvent', 'attention', " + location.pathname + "' : reader/scanner', " + totalTime + ", undefined, false")
+                            console.log("'_trackEvent', 'attention', " + _vj.pathname + "' : reader/scanner', " + totalTime + ", undefined, false")
                         }
                     }
                     attention = true;
@@ -839,11 +840,11 @@ try {
                     if (id != false && (cv == false || cv[2] != id)) {
                         if (_vj.debug) {
                             console.log("'_setCustomVar', 1, 'r', " + document.referrer + ", 1");
-                            console.log("'_setCustomVar', 2, 'l', " + this.crop(window.location.pathname) + ", 1");
+                            console.log("'_setCustomVar', 2, 'l', " + this.crop(_vj.pathname) + ", 1");
                             console.log("'_setCustomVar', 4, 'v', " + id + ", 1")
                         } else {
                             gaScope.push(["_setCustomVar", 1, "r", (document.referrer.length > 0) ? this.crop(document.referrer.substr(7, document.referrer.length)) : "(direct)", 1]);
-                            gaScope.push(["_setCustomVar", 2, "l", this.crop(window.location.pathname), 1]);
+                            gaScope.push(["_setCustomVar", 2, "l", this.crop(_vj.pathname), 1]);
                             gaScope.push(["_setCustomVar", 4, "v", id, 1])
                         }
                     }
