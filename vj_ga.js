@@ -363,6 +363,7 @@ try {
             try {
                 var target = [e.target.nodeName.toLowerCase()];
                 var ePos = e.pageX + "," + e.pageY;
+                var vtarget;
                 target[1] = "";
                 target[1] = (target[1] == "" && typeof (jQuery(e.target).attr("id")) !== "undefined" && jQuery(e.target).attr("id").length > 0) ? "#" + jQuery(e.target).attr("id") : target[1];
                 target[1] = (target[1] == "" && typeof (jQuery(e.target).attr("class")) !== "undefined" && jQuery(e.target).attr("class").length > 0) ? "." + jQuery(e.target).attr("class") : target[1];
@@ -377,6 +378,7 @@ try {
                         _gaq.push(["_trackPageview", encodeURI(tmp[0])]);
                     }
                 }
+                vtarget = target[1];
                 target = target.toString().replace(/,/g, "");
                 target = _vj.pathname + ":" + target;
                 if (!jQuery(e.target).parents().andSelf().hasClass("vj_noclick") && _vj._thisClickEvent != ePos && (typeof (_vj.trackClicks) === "undefined" || _vj.trackClicks == true)) {
@@ -385,9 +387,9 @@ try {
                 }
                 //test for the presence of a virtual pageview request
 		try {
-                    if (jQuery(e.target).hasClass("vj_virtualpage") && _vj._thisClickVirtual != target) {
-                        _gaq.push(["_trackPageview", _vj.pathname + "/virtualpage/" + encodeURI(target)]);
-                        _vj._thisClickVirtual = target
+                    if (jQuery(e.target).hasClass("vj_virtualpage") && _vj._thisClickVirtual != vtarget) {
+                        _gaq.push(["_trackPageview", _vj.pathname + "/virtualpage/" + encodeURI(vtarget)]);
+                        _vj._thisClickVirtual = vtarget
                     }
                 } catch (err) {
                     if (_vj.debug) {
