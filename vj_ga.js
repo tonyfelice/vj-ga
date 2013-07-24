@@ -272,7 +272,7 @@ try {
             try {
                 var tracker = false;
                 var thishref = (jQuery(this).attr("href")) ? jQuery(this).attr("href") : "none";
-                var linkflag = false;
+                var linkflag = "";
                 if (thishref != "none" && thishref.search(regex) > -1 && thishref.indexOf(thishost) == -1) {
                     if (typeof (_vj.allowDomain) !== "undefined" && _vj.allowDomain.length > 0) {
                         for (i = 0; i < _vj.allowDomain.length; i++) {
@@ -282,6 +282,7 @@ try {
                                         event.preventDefault();
                                         tracker = _gat._getTrackerByName();
                                         this.href = tracker._getLinkerUrl(this.href);
+                                        _gaq.push(["_trackPageview", _vj.pathname + "/chained/" + thishref.replace(regex, "")]);
                                         //vj_chainwindow will allow the session to cross into iFrames and new tabs
                                         if (jQuery(this).hasClass("vj_chainwindow") || jQuery(this).attr("target") == "_blank" || jQuery(this).attr("rel") == "external") {
                                             window.open(this.href)
@@ -289,19 +290,16 @@ try {
                                             window.location = this.href
                                         }
                                     })
-                                    jQuery(this).click(function () {
-                                        _gaq.push(["_trackPageview", _vj.pathname + "/chained/" + this.href.replace(regex, "")])
-                                    });
                                 } catch (err) {
                                     if (_vj.debug) {
                                         console.log("link:" + err + "; " + this.href + " getLinkerURL fail")
                                     }
                                 }
-                                linkflag = true
+                                linkflag = thishref;
                             }
                         }
                     }
-                    if (!linkflag) {
+                    if (linkflag!=thishref) {
                         jQuery(this).click(function () {
                             _gaq.push(["_trackPageview", _vj.pathname + "/outbound/" + this.href.replace(regex, "")])
                         });
