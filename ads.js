@@ -1,1 +1,1 @@
-_adsok = true;
+var _adsok = true;
