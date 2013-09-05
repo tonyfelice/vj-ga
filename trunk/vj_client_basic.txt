@@ -11,15 +11,17 @@
 			,trackForms:	true
 			,trackViewport:	true
 			,trackScroll:	true
+			,trackAdblock:	true
 			,trackSocial:	true
 			,configSocial:	{
 				facebook:'1234567890'}
-			,userDefined:	document.referrer
+			,useReferrer:	true
+			,useFragment:	true
 			,customVars:	true
 			,debug:		false
 			,useAddThis:	false
 			,useShareThis:	false
-			,useDoubleclick:true
+			,useDoubleclick:false
 			,trackParams:	[ 
 				'querystringKey'
 				,'anotherKey']
@@ -30,6 +32,9 @@
 <!-- do not modify below -->
 <script type="text/javascript">
 	(function(){if(typeof(jQuery)=="undefined"){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);}})();
+</script>
+<script type="text/javascript">
+	(function(){if(typeof(_vj.autometrics.trackAdblock)!=="undefined" && _vj.autometrics.trackAdblock){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src="//vj-ga.googlecode.com/svn/trunk/ads.js?adurl=/";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);}})();
 </script>
 <script type="text/javascript">
 	(function(){var b=document.createElement("script");b.type="text/javascript";b.async=false;b.src="//vj-ga.googlecode.com/svn/trunk/vj_ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);})();

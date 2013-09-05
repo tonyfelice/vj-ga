@@ -71,6 +71,10 @@ INTEGRATED 7/13
     support for uri fragments (anchors,hashtags,hashbangs etc)
     tracking chained domains (movement across allowed domains) as virtual pv /chained/
     
+INTEGRATED 8/13
+    updated support for fragments
+    test for DNT and ABP (trackAdblock)
+    
 TO DO:
     climb up and find a link
     swap src on iframes that match allow domain
@@ -118,6 +122,7 @@ try {
         trackForms: _vj.autometrics.trackForms || false,
         trackViewport: _vj.autometrics.trackViewport || false,
         trackScroll: _vj.autometrics.trackScroll || false,
+        trackAdblock: _vj.autometrics.trackAdblock || false,
         trackSocial: _vj.autometrics.trackSocial || false,
         configSocial: _vj.autometrics.configSocial || {},
         useAddThis: _vj.autometrics.useAddThis || false,
@@ -239,6 +244,19 @@ try {
         window._evTrackProxy = _evTrackProxy //promote the fn - also exposed to flash, so please do not change fn name, and make sure this remains at window scope
     }(window));
     
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    detect hashchange events
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*/
+    (function() {
+        var locationHashChanged = function(){
+            _vj.pathname = (document.location.pathname +  document.location.hash ).toLowerCase();
+            _gaq.push(["_trackPageview", _vj.pathname]);
+        };
+        window.locationHashChanged = locationHashChanged;
+    }(window));
+    window.onhashchange = (_vj.useFragment) ? locationHashChanged : window.onhashchange;
+    
     
     /*
     ~*~*~*~*~*~*~*~*~*~*~*~*~*
@@ -246,12 +264,35 @@ try {
     ~*~*~*~*~*~*~*~*~*~*~*~*~*/
     try {
         if (_vj.useReferrer !== false && document.referrer.length > 0 && (_vj.cookeez.eat("_vj-utm-ud") === false)) {
-            _gaq.push(["_setVar", document.referrer])
+            _gaq.push(["_setVar", document.referrer]);
         }
-        _vj.cookeez.bake("_vj-utm-ud", "init", false)
+        _vj.cookeez.bake("_vj-utm-ud", "init", false);
     } catch (err) {
         if (_vj.debug) {
-            console.log("err: " + err)
+            console.log("err: " + err);
+        }
+    }
+    
+    
+    /*
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*
+    detect ad blocking scripts
+    ~*~*~*~*~*~*~*~*~*~*~*~*~*/
+    try {
+        if (_vj.trackAdblock && (_vj.cookeez.eat("_vj-utm-abp") === false)) { //only perform on first run
+            _vj.cookeez.bake("_vj-utm-abp", "init", false);
+            _vj.ads = ((typeof(_adsok)!=='undefined' && _adsok===true)? 'ads visible':'ads blocked');
+            _vj.dnt = ((window.navigator.doNotTrack) ? 'enabled' : 'not set');
+            if (typeof (_vj.debug) !== "undefined" && _vj.debug === true) {
+                console.log("'_trackEvent', 'environment', 'adblock', " + _vj.ads.toString() + ", undefined, true");
+            } else {
+                _gaq.push(["_trackEvent", "environment", "adblock", _vj.ads.toString(), undefined, true]);
+                _gaq.push(["_trackEvent", "environment", "do not track", _vj.dnt.toString(), undefined, true]);
+            }
+        }
+    } catch (err) {
+        if (_vj.debug) {
+            console.log("logAdblock: " + err);
         }
     }
     
@@ -371,10 +412,7 @@ try {
                 if (typeof (jQuery(e.target).attr("href")) != "undefined" && jQuery(e.target).attr("href").length > 0) {
                     target[2] = jQuery(e.target).attr("href");
                     tmp = target[2].split("?"); //this is disrespectful of a fragment
-                    target[2] = " (href=" + tmp[0] + ")"
-                    if(tmp[0].charAt[0] == "#" && _vj.useFragment){
-                        _gaq.push(["_trackPageview", encodeURI(tmp[0])]);
-                    }
+                    target[2] = " (href=" + tmp[0] + ")";
                 }
                 vtarget = target[1];
                 target = target.toString().replace(/,/g, "");
